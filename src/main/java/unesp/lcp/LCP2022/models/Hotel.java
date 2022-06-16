@@ -43,5 +43,4 @@ public class Hotel implements Serializable {
     private List<Room> rooms;
     
     
-    
 }
