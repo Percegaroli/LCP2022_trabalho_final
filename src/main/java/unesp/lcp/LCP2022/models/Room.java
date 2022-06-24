@@ -41,6 +41,9 @@ public class Room implements Serializable {
     @Column
     private int capacity;
     
+    @Column
+    private float basePricePerDay;
+    
     @Enumerated(EnumType.STRING)
     private RoomTypes type;
 }

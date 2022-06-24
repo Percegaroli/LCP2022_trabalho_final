@@ -35,7 +35,7 @@ class AccomodationKey implements Serializable {
 @NoArgsConstructor
 public class Accomodation implements Serializable {
     @EmbeddedId
-    AccomodationKey id;
+    private AccomodationKey id;
     
     @Column
     @NotNull

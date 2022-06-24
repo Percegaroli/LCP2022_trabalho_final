@@ -27,6 +27,10 @@ public class Customer implements Serializable {
     @Column(length = 8)
     private String cep;
     
+    @Column
+    private String number;
+    
+    
     @Column(length = 15)
     private String phone;
     
