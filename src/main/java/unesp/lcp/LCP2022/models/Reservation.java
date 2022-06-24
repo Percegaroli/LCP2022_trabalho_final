@@ -4,52 +4,50 @@
  */
 package unesp.lcp.LCP2022.models;
 
+import com.sun.istack.NotNull;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Hotel implements Serializable {
+public class Reservation implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     
     @Column
-    private String name;
-    
-    @Column(length = 8)
-    private String cep;
+    @NotNull
+    private double price;
     
     @Column
-    private String number;
+    private double discount;
     
-    @Column(length = 11)
-    private String phoneNumber;
+    @Column
+    @NotNull
+    private Date checkinDate;
     
-    @OneToMany(mappedBy = "hotel")
-    private List<Room> rooms;
+    @Column
+    private int daysReserved;
     
-    @ManyToMany
-    @JoinTable(
-            name="supplied_services",
-            joinColumns = @JoinColumn(name="hotel_id"),
-            inverseJoinColumns = @JoinColumn(name="service_id")
-    )
-    private List<Service> suppliedServices;
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room room;
+    
+    @ManyToOne
+    @JoinColumn(name = "customer_cpf")
+    private Customer customer;
 }
