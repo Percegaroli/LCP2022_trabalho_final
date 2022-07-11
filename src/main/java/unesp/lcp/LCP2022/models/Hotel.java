@@ -33,6 +33,12 @@ public class Hotel implements Serializable {
     @Column
     private String name;
     
+    @Column
+    private String city;
+    
+    @Column
+    private Integer Category;
+    
     @Column(length = 8)
     private String cep;
     

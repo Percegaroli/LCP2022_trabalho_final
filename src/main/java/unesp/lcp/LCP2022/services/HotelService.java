@@ -7,6 +7,7 @@ package unesp.lcp.LCP2022.services;
 import java.util.List;
 import java.util.Optional;
 import unesp.lcp.LCP2022.models.Hotel;
+import unesp.lcp.LCP2022.models.Room;
 
 /**
  *
@@ -17,4 +18,5 @@ public interface HotelService {
     public Hotel createNewHotel(Hotel hotel);
     public List<Hotel> listHotels();
     public List<Hotel> getHotelsByName(String name);
+    public List<Room> getAvailableRooms();
 }

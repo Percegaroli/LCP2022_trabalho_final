@@ -6,9 +6,11 @@ package unesp.lcp.LCP2022.services.v1;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unesp.lcp.LCP2022.models.Hotel;
+import unesp.lcp.LCP2022.models.Room;
 import unesp.lcp.LCP2022.repositories.HotelRepository;
 import unesp.lcp.LCP2022.services.HotelService;
 
@@ -37,5 +39,14 @@ public class HotelServiceImpl implements HotelService {
         return this.hotelRepository.findAllByName(name);
     }
     
-    
+    /*@Override
+    public List<Room> getAvailableRooms(Hotel hotel){
+        return this.hotelRepository.
+    }*/
+
+    @Override
+    public List<Room> getAvailableRooms() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+      
 }
