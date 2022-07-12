@@ -4,12 +4,20 @@
  */
 package unesp.lcp.LCP2022.forms;
 
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import unesp.lcp.LCP2022.services.v1.HotelServiceImpl;
+import javax.swing.table.DefaultTableModel;
+import unesp.lcp.LCP2022.models.Hotel;
+
 /**
  *
  * @author Lucas Ghisloti
  */
 public class Inicia extends javax.swing.JFrame {
-
+    
+    @Autowired
+    private HotelServiceImpl hotelServicos;
     /**
      * Creates new form Inicia
      */
@@ -95,6 +103,11 @@ public class Inicia extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(660, 300));
         setResizable(false);
         setSize(new java.awt.Dimension(660, 300));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jTabbedPane1.setName("mainMenu"); // NOI18N
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(660, 300));
@@ -102,6 +115,7 @@ public class Inicia extends javax.swing.JFrame {
         jPanel1.setName("tabHoteis"); // NOI18N
         jPanel1.setLayout(new java.awt.CardLayout());
 
+        jTable1.setAutoCreateColumnsFromModel(false);
         jTable1.setBackground(new java.awt.Color(110, 207, 226));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -120,13 +134,14 @@ public class Inicia extends javax.swing.JFrame {
             }
         });
         jTable1.setColumnSelectionAllowed(true);
-        jTable1.setName("tableHoteis"); // NOI18N
+        jTable1.setName("tbHoteis"); // NOI18N
         jTable1.setSelectionBackground(new java.awt.Color(36, 70, 196));
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.setShowGrid(false);
         jScrollPane1.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jTable1.getAccessibleContext().setAccessibleName("tableHoteis");
+        jTable1.getAccessibleContext().setAccessibleName("tbHoteis");
+        jTable1.getAccessibleContext().setAccessibleDescription("tbHoteis");
 
         jPanel1.add(jScrollPane1, "card2");
 
@@ -613,17 +628,19 @@ public class Inicia extends javax.swing.JFrame {
                             .addComponent(jTextField26, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel21)
-                    .addComponent(jLabel23)
-                    .addComponent(jLabel19))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel16)
+                        .addComponent(jLabel23)
+                        .addComponent(jLabel19)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextField23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -704,6 +721,23 @@ public class Inicia extends javax.swing.JFrame {
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        int i;
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        List<Hotel> hoteis;
+        hoteis = hotelServicos.listHotels();
+        for(i=0; i<hoteis.size(); i++){
+            modelo.addRow(new Object[]{
+                hoteis.get(i).getName(),
+                hoteis.get(i).getCity(),
+                hoteis.get(i).getCategory(),
+                hoteis.get(i).getPhoneNumber(),
+                hoteis.get(i).getRooms().size()
+            });
+        }
+    }//GEN-LAST:event_formWindowActivated
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

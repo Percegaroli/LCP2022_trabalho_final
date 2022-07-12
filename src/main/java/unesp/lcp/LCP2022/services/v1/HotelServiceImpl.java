@@ -6,7 +6,6 @@ package unesp.lcp.LCP2022.services.v1;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unesp.lcp.LCP2022.models.Hotel;
