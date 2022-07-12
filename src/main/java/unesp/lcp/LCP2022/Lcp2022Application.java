@@ -1,7 +1,7 @@
 package unesp.lcp.LCP2022;
 
+import java.awt.EventQueue;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,8 +11,20 @@ import javax.swing.JOptionPane;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import unesp.lcp.LCP2022.services.HotelService;
 
+@Component
 class TesteSwing extends JFrame{
+        @Autowired
+        private HotelService hotelService;
 	
 	private final JLabel label1 = new JLabel();
 	private final JLabel label2 = new JLabel();
@@ -27,7 +39,7 @@ class TesteSwing extends JFrame{
 	public TesteSwing(){
 		super("Acesso ao sistema");
 		setLayout(new FlowLayout());
-		
+                		
 		label1.setText("Login: ");
 		add(label1);
 		fieldLogin = new JTextField(10);
@@ -43,9 +55,16 @@ class TesteSwing extends JFrame{
 		passwordField.addActionListener(handler);
 		
 		setVisible(true);
+                setSize(600, 100);
 	}
 	
-	private static void validaLogin(String logText, String passText) {
+	private void validaLogin(String logText, String passText) {
+                var hotel = hotelService.getHotelById(1L);
+                if (hotel.isPresent()){
+                    System.out.printf("%s", hotel.get().getName());
+                }else {
+                    System.out.println("Deu merda");
+                }
 				
 		if (logText.equals(loginCerto) && passText.equals(senhaCerta)) {
 			JOptionPane.showMessageDialog(null, "Senha válida!");
@@ -60,6 +79,18 @@ class TesteSwing extends JFrame{
 			System.exit(1);
 		}		
 	}
+
+        /*
+    @Override
+    public void run(String... args) throws Exception {
+         try {
+            TesteSwing frame = new TesteSwing();
+            frame.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+*/
 	
 	private class loginHandler implements ActionListener {
     
@@ -74,16 +105,16 @@ class TesteSwing extends JFrame{
 	}
 }
 
-@SpringBootApplication
+@Configuration
+@ComponentScan
+@EnableAutoConfiguration
 public class Lcp2022Application {
-
 	public static void main(String[] args) {
-		SpringApplication.run(Lcp2022Application.class, args);
-                System.setProperty("java.awt.headless", "false");
-                TesteSwing ex1 = new TesteSwing(); 
-		ex1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		ex1.setSize(600, 100); 
-		ex1.setVisible(true);
+            ConfigurableApplicationContext context = new SpringApplicationBuilder(Lcp2022Application.class).headless(false).run(args);
+             EventQueue.invokeLater(() -> {
+                TesteSwing ex = context.getBean(TesteSwing.class);
+                ex.setVisible(true);
+            });
 	}
 
 }
