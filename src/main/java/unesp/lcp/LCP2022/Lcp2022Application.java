@@ -19,9 +19,9 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import unesp.lcp.LCP2022.forms.Inicia;
 import unesp.lcp.LCP2022.services.HotelService;
 
-@Component
 class TesteSwing extends JFrame{
         @Autowired
         private HotelService hotelService;
@@ -79,18 +79,6 @@ class TesteSwing extends JFrame{
 			System.exit(1);
 		}		
 	}
-
-        /*
-    @Override
-    public void run(String... args) throws Exception {
-         try {
-            TesteSwing frame = new TesteSwing();
-            frame.setVisible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-*/
 	
 	private class loginHandler implements ActionListener {
     
@@ -112,7 +100,7 @@ public class Lcp2022Application {
 	public static void main(String[] args) {
             ConfigurableApplicationContext context = new SpringApplicationBuilder(Lcp2022Application.class).headless(false).run(args);
              EventQueue.invokeLater(() -> {
-                TesteSwing ex = context.getBean(TesteSwing.class);
+                Inicia ex = context.getBean(Inicia.class);
                 ex.setVisible(true);
             });
 	}
