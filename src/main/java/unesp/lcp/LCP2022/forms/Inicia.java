@@ -4,12 +4,14 @@
  */
 package unesp.lcp.LCP2022.forms;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import unesp.lcp.LCP2022.services.v1.HotelServiceImpl;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.stereotype.Component;
 import unesp.lcp.LCP2022.models.Hotel;
+import unesp.lcp.LCP2022.services.HotelService;
 
 /**
  *
@@ -19,7 +21,7 @@ import unesp.lcp.LCP2022.models.Hotel;
 public class Inicia extends javax.swing.JFrame {
     
     @Autowired
-    private HotelServiceImpl hotelServicos;
+    private HotelService hotelServicos;
 
     /**
      * Creates new form Inicia
@@ -39,8 +41,8 @@ public class Inicia extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jTextField1 = new javax.swing.JTextField();
@@ -118,35 +120,35 @@ public class Inicia extends javax.swing.JFrame {
         jPanel1.setName("tabHoteis"); // NOI18N
         jPanel1.setLayout(new java.awt.CardLayout());
 
-        jTable1.setAutoCreateColumnsFromModel(false);
-        jTable1.setBackground(new java.awt.Color(110, 207, 226));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Hotel", "Cidade", "Estrelas", "Telefone", "Quartos Disp."
+                "Número", "Nome", "Cep"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-        });
-        jTable1.setColumnSelectionAllowed(true);
-        jTable1.setName("tbHoteis"); // NOI18N
-        jTable1.setSelectionBackground(new java.awt.Color(36, 70, 196));
-        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jTable1.setShowGrid(false);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jTable1.getAccessibleContext().setAccessibleName("tbHoteis");
-        jTable1.getAccessibleContext().setAccessibleDescription("tbHoteis");
 
-        jPanel1.add(jScrollPane1, "card2");
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(jTable3);
+
+        jPanel1.add(jScrollPane3, "card3");
 
         jTabbedPane1.addTab("Conheça Nossos Hoteis", jPanel1);
         jPanel1.getAccessibleContext().setAccessibleName("tabHoteis");
@@ -728,10 +730,20 @@ public class Inicia extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-        int i;
-        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        var hotels = hotelServicos.listHotels();
+        String header[] = new String[] { "Número" , "Nome", "Cep" };
+        DefaultTableModel model = new DefaultTableModel(0, 0);
+        model.setColumnIdentifiers(header);
+        jTable3.setModel(model);
+        for (var hotel : hotels){
+            List<String> columns = new ArrayList();
+            columns.add(hotel.getId().toString());
+            columns.add(hotel.getName());
+            columns.add(hotel.getCep());
+            model.addRow(columns.toArray());
+        }
     }//GEN-LAST:event_formWindowActivated
-
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -768,11 +780,11 @@ public class Inicia extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
