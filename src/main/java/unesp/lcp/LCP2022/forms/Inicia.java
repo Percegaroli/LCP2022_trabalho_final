@@ -6,18 +6,30 @@ package unesp.lcp.LCP2022.forms;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.swing.table.DefaultTableModel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 import unesp.lcp.LCP2022.models.Hotel;
 import unesp.lcp.LCP2022.services.AccomodationService;
 import unesp.lcp.LCP2022.services.CustomerService;
 import unesp.lcp.LCP2022.services.HotelService;
+
+@AllArgsConstructor
+@Getter
+class AccomodationToCheckout {
+    private String customerCPF;
+    private Long reservationId;
+}
 
 /**
  *
@@ -34,6 +46,8 @@ public class Inicia extends javax.swing.JFrame {
     
     @Autowired
     private AccomodationService accomodationService;
+    
+    private AccomodationToCheckout accomodationToCheckout;
 
     /**
      * Creates new form Inicia
@@ -548,6 +562,11 @@ public class Inicia extends javax.swing.JFrame {
         confirmCheckoutButton.setBackground(new java.awt.Color(121, 162, 141));
         confirmCheckoutButton.setText("Corfirmar Check-out");
         confirmCheckoutButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        confirmCheckoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmCheckoutButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -856,7 +875,7 @@ public class Inicia extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowActivated
 
     private void jTable3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable3FocusGained
-        System.out.println("Foquei nessa porra");
+        
     }//GEN-LAST:event_jTable3FocusGained
 
     private void checkoutSearchAccomodationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutSearchAccomodationsButtonActionPerformed
@@ -868,19 +887,52 @@ public class Inicia extends javax.swing.JFrame {
                 var reservation = accomodation.get().getReservation();
                 var room = reservation.getRoom();
                 var hotel = room.getHotel();
+                var dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 checkoutCustomerCPFField.setText(customer.getCpf());
                 checkoutCustomerNameField.setText(customer.getName());
-                checkoutCustomerBirthDateField.setText(customer.getBirthDate().toString());
-                checkoutCheckInDateField.setText(accomodation.get().getCheckinDate().toString());
                 checkoutDaysAccomodatedField.setText(String.valueOf(reservation.getDaysReserved()));
                 checkoutHotelNameField.setText(hotel.getName());
                 checkoutRoomFloorField.setText(String.valueOf(room.getFloor()));
                 checkoutRoomIdField.setText(String.valueOf(room.getId()));
                 checkoutRoomCapacityField.setText(String.valueOf(room.getCapacity()));
-                checkoutSearchAccomodationsButton.setEnabled(true);
+                accomodationToCheckout = new AccomodationToCheckout(cpf, reservation.getId());
+                checkoutCustomerBirthDateField.setText(dateFormat.format(customer.getBirthDate()));
+                checkoutCheckInDateField.setText(dateFormat.format(accomodation.get().getCheckinDate()));
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Esse hóspede não possuí uma hospedagem na rede de hotéis");
+                clearAccomodationData();
             }
         }
+        else {
+            JOptionPane.showMessageDialog(null, "Por favor, informe um cpf valido");
+            clearAccomodationData();
+        }
     }//GEN-LAST:event_checkoutSearchAccomodationsButtonActionPerformed
+
+    private void clearAccomodationData(){
+        accomodationToCheckout = null;
+        checkoutCustomerCPFField.setText("");
+        checkoutCustomerNameField.setText("");
+        checkoutCustomerBirthDateField.setText("");
+        checkoutCheckInDateField.setText("");
+        checkoutDaysAccomodatedField.setText("");
+        checkoutHotelNameField.setText("");
+        checkoutRoomFloorField.setText("");
+        checkoutRoomIdField.setText("");
+        checkoutRoomCapacityField.setText("");
+    }
+    
+    private void confirmCheckoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmCheckoutButtonActionPerformed
+        if (accomodationToCheckout != null){
+            var accomodation = accomodationService.makeCheckout(accomodationToCheckout.getCustomerCPF(), accomodationToCheckout.getReservationId());
+            if (accomodation.isPresent()){
+                clearAccomodationData();
+                checkoutCpfTextField.setText("");
+                JOptionPane.showMessageDialog(null, "Checkout realizado com sucesso!");
+            }
+        }
+    }//GEN-LAST:event_confirmCheckoutButtonActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -13,4 +13,6 @@ import unesp.lcp.LCP2022.models.Accomodation;
  */
 public interface AccomodationService {
      Optional<Accomodation> findAccomodationByCustomerCPF(String cpf);
+     
+     Optional<Accomodation> makeCheckout(String cpf, long reservationId);
 }
