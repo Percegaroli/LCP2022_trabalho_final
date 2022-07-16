@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.stereotype.Component;
 import unesp.lcp.LCP2022.models.Hotel;
+import unesp.lcp.LCP2022.services.AccomodationService;
 import unesp.lcp.LCP2022.services.CustomerService;
 import unesp.lcp.LCP2022.services.HotelService;
 
@@ -30,6 +31,9 @@ public class Inicia extends javax.swing.JFrame {
     
     @Autowired
     private CustomerService customerService;
+    
+    @Autowired
+    private AccomodationService accomodationService;
 
     /**
      * Creates new form Inicia
@@ -84,31 +88,29 @@ public class Inicia extends javax.swing.JFrame {
         jTextField12 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jTextField14 = new javax.swing.JTextField();
+        checkoutCustomerNameField = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
+        checkoutHotelNameField = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
-        jTextField16 = new javax.swing.JTextField();
-        jTextField17 = new javax.swing.JTextField();
+        checkoutCpfTextField = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jTextField18 = new javax.swing.JTextField();
-        jTextField19 = new javax.swing.JTextField();
+        checkoutSearchAccomodationsButton = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        checkoutCustomerCPFField = new javax.swing.JTextField();
+        checkoutRoomIdField = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jTextField22 = new javax.swing.JTextField();
-        jTextField23 = new javax.swing.JTextField();
+        checkoutRoomFloorField = new javax.swing.JTextField();
+        checkoutRoomCapacityField = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
-        jTextField26 = new javax.swing.JTextField();
+        checkoutCustomerBirthDateField = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
-        jTextField20 = new javax.swing.JTextField();
+        checkoutCheckInDateField = new javax.swing.JTextField();
+        checkoutDaysAccomodatedField = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        confirmCheckoutButton = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -425,48 +427,42 @@ public class Inicia extends javax.swing.JFrame {
         jPanel3.setName("tabCheckOut"); // NOI18N
         jPanel3.setPreferredSize(new java.awt.Dimension(660, 440));
 
-        jTextField14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField14.setText("jTextField3");
-        jTextField14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTextField14.setMinimumSize(new java.awt.Dimension(64, 20));
+        checkoutCustomerNameField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        checkoutCustomerNameField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        checkoutCustomerNameField.setEnabled(false);
+        checkoutCustomerNameField.setMinimumSize(new java.awt.Dimension(64, 20));
 
         jLabel14.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel14.setText("Nome");
 
-        jTextField15.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField15.setText("jTextField9");
-        jTextField15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTextField15.setMinimumSize(new java.awt.Dimension(64, 20));
+        checkoutHotelNameField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        checkoutHotelNameField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        checkoutHotelNameField.setEnabled(false);
+        checkoutHotelNameField.setMinimumSize(new java.awt.Dimension(64, 20));
 
         jLabel15.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel15.setText("CPF");
 
-        jLabel16.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jLabel16.setText("Hotel");
-
         jLayeredPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Insira Quarto e Piso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("sansserif", 0, 14))); // NOI18N
 
-        jTextField16.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jTextField16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        jTextField17.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jTextField17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        checkoutCpfTextField.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        checkoutCpfTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel17.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jLabel17.setText("Quarto");
+        jLabel17.setText("CPF");
 
-        jLabel18.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jLabel18.setText("Piso");
+        checkoutSearchAccomodationsButton.setBackground(new java.awt.Color(121, 162, 141));
+        checkoutSearchAccomodationsButton.setText("Pesquisar");
+        checkoutSearchAccomodationsButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        checkoutSearchAccomodationsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkoutSearchAccomodationsButtonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setBackground(new java.awt.Color(121, 162, 141));
-        jButton2.setText("Pesquisar");
-        jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jLayeredPane2.setLayer(jTextField16, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jTextField17, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(checkoutCpfTextField, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel17, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jLabel18, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(checkoutSearchAccomodationsButton, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
@@ -475,41 +471,36 @@ public class Inicia extends javax.swing.JFrame {
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17))
+                    .addComponent(jLabel17)
+                    .addComponent(checkoutCpfTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel18)
-                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                        .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)))
+                .addComponent(checkoutSearchAccomodationsButton)
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel18))
+                .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(checkoutCpfTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkoutSearchAccomodationsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTextField18.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField18.setText("jTextField4");
-        jTextField18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTextField18.setMinimumSize(new java.awt.Dimension(64, 20));
+        jLabel16.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jLabel16.setText("Hotel");
 
-        jTextField19.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField19.setText("jTextField10");
-        jTextField19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTextField19.setMinimumSize(new java.awt.Dimension(64, 20));
+        checkoutCustomerCPFField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        checkoutCustomerCPFField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        checkoutCustomerCPFField.setEnabled(false);
+        checkoutCustomerCPFField.setMinimumSize(new java.awt.Dimension(64, 20));
+
+        checkoutRoomIdField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        checkoutRoomIdField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        checkoutRoomIdField.setEnabled(false);
+        checkoutRoomIdField.setMinimumSize(new java.awt.Dimension(64, 20));
 
         jLabel19.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel19.setText("Quarto");
@@ -517,15 +508,15 @@ public class Inicia extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel21.setText("Piso");
 
-        jTextField22.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField22.setText("jTextField11");
-        jTextField22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTextField22.setMinimumSize(new java.awt.Dimension(64, 20));
+        checkoutRoomFloorField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        checkoutRoomFloorField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        checkoutRoomFloorField.setEnabled(false);
+        checkoutRoomFloorField.setMinimumSize(new java.awt.Dimension(64, 20));
 
-        jTextField23.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField23.setText("jTextField12");
-        jTextField23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTextField23.setMinimumSize(new java.awt.Dimension(64, 20));
+        checkoutRoomCapacityField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        checkoutRoomCapacityField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        checkoutRoomCapacityField.setEnabled(false);
+        checkoutRoomCapacityField.setMinimumSize(new java.awt.Dimension(64, 20));
 
         jLabel23.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel23.setText("Qtd. Pessoas");
@@ -533,30 +524,30 @@ public class Inicia extends javax.swing.JFrame {
         jLabel26.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel26.setText("Data de Nasc.");
 
-        jTextField26.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField26.setText("jTextField25");
-        jTextField26.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTextField26.setMinimumSize(new java.awt.Dimension(64, 20));
+        checkoutCustomerBirthDateField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        checkoutCustomerBirthDateField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        checkoutCustomerBirthDateField.setEnabled(false);
+        checkoutCustomerBirthDateField.setMinimumSize(new java.awt.Dimension(64, 20));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel13.setText("Data de Check-in");
 
-        jTextField13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField13.setText("jTextField13");
-        jTextField13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTextField13.setMinimumSize(new java.awt.Dimension(64, 20));
+        checkoutCheckInDateField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        checkoutCheckInDateField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        checkoutCheckInDateField.setEnabled(false);
+        checkoutCheckInDateField.setMinimumSize(new java.awt.Dimension(64, 20));
 
-        jTextField20.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField20.setText("jTextField20");
-        jTextField20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTextField20.setMinimumSize(new java.awt.Dimension(64, 20));
+        checkoutDaysAccomodatedField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        checkoutDaysAccomodatedField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        checkoutDaysAccomodatedField.setEnabled(false);
+        checkoutDaysAccomodatedField.setMinimumSize(new java.awt.Dimension(64, 20));
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel20.setText("Dias Hospedado");
 
-        jButton3.setBackground(new java.awt.Color(121, 162, 141));
-        jButton3.setText("Corfirmar Check-out");
-        jButton3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        confirmCheckoutButton.setBackground(new java.awt.Color(121, 162, 141));
+        confirmCheckoutButton.setText("Corfirmar Check-out");
+        confirmCheckoutButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -571,52 +562,51 @@ public class Inicia extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel16)
-                                .addGap(205, 205, 205)))
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel21)
-                            .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(checkoutHotelNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel19)
+                                .addGap(27, 27, 27))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(checkoutRoomIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel21)
+                            .addComponent(checkoutRoomFloorField, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel23)
-                            .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .addComponent(checkoutRoomCapacityField, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel14))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(checkoutCheckInDateField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(32, 32, 32))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                         .addComponent(jLabel13)
                                         .addGap(44, 44, 44)))
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel20)
-                                    .addComponent(jTextField20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(checkoutDaysAccomodatedField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(checkoutCustomerNameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(checkoutCustomerBirthDateField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(checkoutCustomerCPFField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel15)))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(26, 26, 26)
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(confirmCheckoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGap(122, 122, 122))
         );
         jPanel3Layout.setVerticalGroup(
@@ -629,15 +619,15 @@ public class Inicia extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(checkoutCustomerCPFField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel26)
                             .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField26, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                            .addComponent(checkoutCustomerBirthDateField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(checkoutCustomerNameField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel21)
@@ -647,11 +637,11 @@ public class Inicia extends javax.swing.JFrame {
                         .addComponent(jLabel19)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(checkoutRoomCapacityField, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(checkoutHotelNameField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(checkoutRoomFloorField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(checkoutRoomIdField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -660,11 +650,13 @@ public class Inicia extends javax.swing.JFrame {
                             .addComponent(jLabel20))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(checkoutDaysAccomodatedField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(checkoutCheckInDateField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(confirmCheckoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(96, 96, 96))
         );
+
+        jLayeredPane2.getAccessibleContext().setAccessibleName("Insira o CPF do hóspede");
 
         jTabbedPane1.addTab("Check-out", jPanel3);
         jPanel3.getAccessibleContext().setAccessibleName("tabCheckOut");
@@ -836,7 +828,7 @@ public class Inicia extends javax.swing.JFrame {
         
     }
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // TODO add your handling code here:      
+        // TODO add your handling code here:    
         var hotels = hotelServicos.listHotels();
         String header[] = new String[] { "Número" , "Nome", "Cep" };
         DefaultTableModel model = new DefaultTableModel(0, 0);
@@ -866,13 +858,46 @@ public class Inicia extends javax.swing.JFrame {
     private void jTable3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable3FocusGained
         System.out.println("Foquei nessa porra");
     }//GEN-LAST:event_jTable3FocusGained
+
+    private void checkoutSearchAccomodationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutSearchAccomodationsButtonActionPerformed
+        var cpf = checkoutCpfTextField.getText();
+        if (!"".equals(cpf)){
+            var accomodation = accomodationService.findAccomodationByCustomerCPF(cpf);
+            if (accomodation.isPresent()){
+                var customer = accomodation.get().getCustomer();
+                var reservation = accomodation.get().getReservation();
+                var room = reservation.getRoom();
+                var hotel = room.getHotel();
+                checkoutCustomerCPFField.setText(customer.getCpf());
+                checkoutCustomerNameField.setText(customer.getName());
+                checkoutCustomerBirthDateField.setText(customer.getBirthDate().toString());
+                checkoutCheckInDateField.setText(accomodation.get().getCheckinDate().toString());
+                checkoutDaysAccomodatedField.setText(String.valueOf(reservation.getDaysReserved()));
+                checkoutHotelNameField.setText(hotel.getName());
+                checkoutRoomFloorField.setText(String.valueOf(room.getFloor()));
+                checkoutRoomIdField.setText(String.valueOf(room.getId()));
+                checkoutRoomCapacityField.setText(String.valueOf(room.getCapacity()));
+                checkoutSearchAccomodationsButton.setEnabled(true);
+            }
+        }
+    }//GEN-LAST:event_checkoutSearchAccomodationsButtonActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ReservationDay;
+    private javax.swing.JTextField checkoutCheckInDateField;
+    private javax.swing.JTextField checkoutCpfTextField;
+    private javax.swing.JTextField checkoutCustomerBirthDateField;
+    private javax.swing.JTextField checkoutCustomerCPFField;
+    private javax.swing.JTextField checkoutCustomerNameField;
+    private javax.swing.JTextField checkoutDaysAccomodatedField;
+    private javax.swing.JTextField checkoutHotelNameField;
+    private javax.swing.JTextField checkoutRoomCapacityField;
+    private javax.swing.JTextField checkoutRoomFloorField;
+    private javax.swing.JTextField checkoutRoomIdField;
+    private javax.swing.JButton checkoutSearchAccomodationsButton;
+    private javax.swing.JButton confirmCheckoutButton;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -884,7 +909,6 @@ public class Inicia extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -923,19 +947,8 @@ public class Inicia extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField19;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField20;
-    private javax.swing.JTextField jTextField22;
-    private javax.swing.JTextField jTextField23;
     private javax.swing.JTextField jTextField25;
-    private javax.swing.JTextField jTextField26;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
