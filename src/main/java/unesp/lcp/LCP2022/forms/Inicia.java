@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.stereotype.Component;
 import unesp.lcp.LCP2022.models.Hotel;
+import unesp.lcp.LCP2022.services.CustomerService;
 import unesp.lcp.LCP2022.services.HotelService;
 
 /**
@@ -26,6 +27,9 @@ public class Inicia extends javax.swing.JFrame {
     
     @Autowired
     private HotelService hotelServicos;
+    
+    @Autowired
+    private CustomerService customerService;
 
     /**
      * Creates new form Inicia
@@ -832,7 +836,7 @@ public class Inicia extends javax.swing.JFrame {
         
     }
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // TODO add your handling code here:
+        // TODO add your handling code here:      
         var hotels = hotelServicos.listHotels();
         String header[] = new String[] { "Número" , "Nome", "Cep" };
         DefaultTableModel model = new DefaultTableModel(0, 0);
