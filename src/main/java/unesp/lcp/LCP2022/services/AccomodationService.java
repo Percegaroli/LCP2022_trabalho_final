@@ -17,4 +17,5 @@ import unesp.lcp.LCP2022.models.Reservation;
 public interface AccomodationService {
      Optional<Accomodation> findAccomodationByCustomerCPF(String cpf);
      Accomodation saveAccomodation(Customer customer, Date checkinDate, Reservation reservation);
+     Optional<Accomodation> makeCheckout(String cpf, long reservationId);
 }

@@ -28,12 +28,11 @@ public class AccomodationServiceImpl implements AccomodationService {
     @Override
     public Optional<Accomodation> findAccomodationByCustomerCPF(String cpf){
         return accomodationRepository
-                    .findAllByCustomerCpf(cpf)
+                    .findAllByCustomerCpfAndCheckoutDateIsNull(cpf)
                     .stream()
                     .findFirst();
     }
     
-
     @Override
     public Accomodation saveAccomodation(Customer customer, Date checkinDate, Reservation reservation) {
         AccomodationKey id = new AccomodationKey();
@@ -45,5 +44,16 @@ public class AccomodationServiceImpl implements AccomodationService {
                 .build();
         
         return accomodationRepository.save(accomodation);
+    }
+
+    @Override
+    public Optional<Accomodation> makeCheckout(String cpf, long reservationId){
+        var accomodation = accomodationRepository.findByCustomerCpfAndReservationId(cpf, reservationId);
+        if (accomodation.isPresent()){
+            accomodation.get().setCheckoutDate(new Date());
+            accomodationRepository.save(accomodation.get());
+            return accomodation;
+        }
+        return null;
     }
 }
