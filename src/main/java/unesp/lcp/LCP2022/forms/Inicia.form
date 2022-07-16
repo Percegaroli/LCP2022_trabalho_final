@@ -298,6 +298,10 @@
                   </Border>
                 </Property>
               </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Insira o CPF do Cliente"/>
+                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Insira o CPF do Cliente"/>
+              </AccessibilityProperties>
 
               <Layout>
                 <DimensionLayout dim="0">

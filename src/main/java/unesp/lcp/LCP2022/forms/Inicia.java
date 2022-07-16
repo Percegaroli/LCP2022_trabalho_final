@@ -455,6 +455,9 @@ public class Inicia extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
+        jLayeredPane1.getAccessibleContext().setAccessibleName("Insira o CPF do Cliente");
+        jLayeredPane1.getAccessibleContext().setAccessibleDescription("Insira o CPF do Cliente");
+
         jTabbedPane1.addTab("Check-in", jPanel2);
         jPanel2.getAccessibleContext().setAccessibleName("tabCheckIn");
 
