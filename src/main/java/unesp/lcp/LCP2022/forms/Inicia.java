@@ -238,7 +238,6 @@ public class Inicia extends javax.swing.JFrame {
 
         CustomerNameTextField.setEditable(false);
         CustomerNameTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        CustomerNameTextField.setText("jTextField3");
         CustomerNameTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel3.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
@@ -249,7 +248,6 @@ public class Inicia extends javax.swing.JFrame {
 
         CPFTextField.setEditable(false);
         CPFTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        CPFTextField.setText("jTextField4");
         CPFTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         CPFTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -259,7 +257,6 @@ public class Inicia extends javax.swing.JFrame {
 
         CEPTextField.setEditable(false);
         CEPTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        CEPTextField.setText("jTextField5");
         CEPTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel5.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
@@ -267,7 +264,6 @@ public class Inicia extends javax.swing.JFrame {
 
         HouseNumberTextField.setEditable(false);
         HouseNumberTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        HouseNumberTextField.setText("jTextField6");
         HouseNumberTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel6.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
@@ -275,7 +271,6 @@ public class Inicia extends javax.swing.JFrame {
 
         PhoneTextField.setEditable(false);
         PhoneTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        PhoneTextField.setText("jTextField7");
         PhoneTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel7.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
@@ -283,7 +278,6 @@ public class Inicia extends javax.swing.JFrame {
 
         EmailTextField.setEditable(false);
         EmailTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        EmailTextField.setText("jTextField8");
         EmailTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel8.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
@@ -291,7 +285,6 @@ public class Inicia extends javax.swing.JFrame {
 
         HotelTextField.setEditable(false);
         HotelTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        HotelTextField.setText("jTextField9");
         HotelTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel9.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
@@ -299,7 +292,6 @@ public class Inicia extends javax.swing.JFrame {
 
         RoomTextField.setEditable(false);
         RoomTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        RoomTextField.setText("jTextField10");
         RoomTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel10.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
@@ -310,7 +302,7 @@ public class Inicia extends javax.swing.JFrame {
 
         FloorTextField.setEditable(false);
         FloorTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        FloorTextField.setText("jTextField11");
+        FloorTextField.setToolTipText("");
         FloorTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel12.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
@@ -318,7 +310,6 @@ public class Inicia extends javax.swing.JFrame {
 
         CustomerBirthDateTextField.setEditable(false);
         CustomerBirthDateTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        CustomerBirthDateTextField.setText("jTextField25");
         CustomerBirthDateTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel25.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
@@ -326,7 +317,6 @@ public class Inicia extends javax.swing.JFrame {
 
         CapacityTextField.setEditable(false);
         CapacityTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        CapacityTextField.setText("jTextField12");
         CapacityTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         CheckInButton.setBackground(new java.awt.Color(204, 147, 175));
@@ -342,7 +332,6 @@ public class Inicia extends javax.swing.JFrame {
         jLabel28.setText("Dia");
 
         DayTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        DayTextField.setText("jTextField4");
         DayTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         DayTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -380,31 +369,25 @@ public class Inicia extends javax.swing.JFrame {
                                     .addComponent(jLabel3)
                                     .addComponent(CustomerNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(CustomerBirthDateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(14, 14, 14))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel25)
-                                        .addGap(18, 18, 18)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(CustomerBirthDateTextField))
+                                .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(CPFTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(CheckInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(HotelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel9))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel10)
-                                            .addComponent(RoomTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(FloorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel11))))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(HotelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(RoomTextField))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(FloorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel12)
@@ -415,7 +398,10 @@ public class Inicia extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel28)
-                            .addComponent(DayTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(DayTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(194, 194, 194)
+                        .addComponent(CheckInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(75, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -464,9 +450,9 @@ public class Inicia extends javax.swing.JFrame {
                     .addComponent(RoomTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(FloorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CapacityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(CheckInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Check-in", jPanel2);
