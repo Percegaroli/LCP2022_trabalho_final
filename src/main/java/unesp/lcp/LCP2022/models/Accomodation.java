@@ -8,31 +8,21 @@ import com.sun.istack.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-
-@Data
-@Embeddable
-class AccomodationKey implements Serializable {
-    @Column(name = "customer_cpf")
-    private String customerCpf;
-    
-    @Column(name = "reservation_id")
-    private Long reservationId;
-}
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Accomodation implements Serializable {
     @EmbeddedId
     private AccomodationKey id;

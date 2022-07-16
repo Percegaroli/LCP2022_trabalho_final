@@ -92,7 +92,7 @@ public class Inicia extends javax.swing.JFrame {
         CustomerBirthDateTextField = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
         CapacityTextField = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        CheckInButton = new javax.swing.JButton();
         jLabel28 = new javax.swing.JLabel();
         DayTextField = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
@@ -225,6 +225,7 @@ public class Inicia extends javax.swing.JFrame {
                 .addGap(0, 32, Short.MAX_VALUE))
         );
 
+        CustomerNameTextField.setEditable(false);
         CustomerNameTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         CustomerNameTextField.setText("jTextField3");
         CustomerNameTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -235,6 +236,7 @@ public class Inicia extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel4.setText("CPF");
 
+        CPFTextField.setEditable(false);
         CPFTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         CPFTextField.setText("jTextField4");
         CPFTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -244,6 +246,7 @@ public class Inicia extends javax.swing.JFrame {
             }
         });
 
+        CEPTextField.setEditable(false);
         CEPTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         CEPTextField.setText("jTextField5");
         CEPTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -251,6 +254,7 @@ public class Inicia extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel5.setText("CEP");
 
+        HouseNumberTextField.setEditable(false);
         HouseNumberTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         HouseNumberTextField.setText("jTextField6");
         HouseNumberTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -258,6 +262,7 @@ public class Inicia extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel6.setText("Nº");
 
+        PhoneTextField.setEditable(false);
         PhoneTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         PhoneTextField.setText("jTextField7");
         PhoneTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -265,6 +270,7 @@ public class Inicia extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel7.setText("Telefone");
 
+        EmailTextField.setEditable(false);
         EmailTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         EmailTextField.setText("jTextField8");
         EmailTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -272,6 +278,7 @@ public class Inicia extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel8.setText("Email");
 
+        HotelTextField.setEditable(false);
         HotelTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         HotelTextField.setText("jTextField9");
         HotelTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -279,6 +286,7 @@ public class Inicia extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel9.setText("Hotel");
 
+        RoomTextField.setEditable(false);
         RoomTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         RoomTextField.setText("jTextField10");
         RoomTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -289,6 +297,7 @@ public class Inicia extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel11.setText("Piso");
 
+        FloorTextField.setEditable(false);
         FloorTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         FloorTextField.setText("jTextField11");
         FloorTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -296,6 +305,7 @@ public class Inicia extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel12.setText("Qtd. Pessoas");
 
+        CustomerBirthDateTextField.setEditable(false);
         CustomerBirthDateTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         CustomerBirthDateTextField.setText("jTextField25");
         CustomerBirthDateTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -303,13 +313,19 @@ public class Inicia extends javax.swing.JFrame {
         jLabel25.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel25.setText("Data de Nasc.");
 
+        CapacityTextField.setEditable(false);
         CapacityTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         CapacityTextField.setText("jTextField12");
         CapacityTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton4.setBackground(new java.awt.Color(204, 147, 175));
-        jButton4.setText("Confirmar Check-in");
-        jButton4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        CheckInButton.setBackground(new java.awt.Color(204, 147, 175));
+        CheckInButton.setText("Confirmar Check-in");
+        CheckInButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        CheckInButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CheckInButtonActionPerformed(evt);
+            }
+        });
 
         jLabel28.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel28.setText("Dia");
@@ -365,7 +381,7 @@ public class Inicia extends javax.swing.JFrame {
                                     .addComponent(jLabel4)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(CheckInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(HotelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -438,7 +454,7 @@ public class Inicia extends javax.swing.JFrame {
                     .addComponent(FloorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CapacityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(CheckInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -660,7 +676,7 @@ public class Inicia extends javax.swing.JFrame {
                         .addComponent(jLabel19)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(checkoutRoomCapacityField, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                    .addComponent(checkoutRoomCapacityField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(checkoutHotelNameField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(checkoutRoomFloorField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -904,11 +920,11 @@ public class Inicia extends javax.swing.JFrame {
             SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
             
             try {
-                Date dataUsuario = sdf1.parse("02/01/2022");
+                Date dataUsuario = sdf1.parse(String.format("%s/07/2022", DayTextField.getText()));
                 System.out.println(dataUsuario);    
                 var reservation = reservationService.getReservationByCustomerAndDate(customerInstance, dataUsuario);
                 
-                if (reservation.size() > 0) {
+                if (!reservation.isEmpty()) {
                     var reservationInstance = reservation.get(0);
                     var hotelId = reservationInstance.getRoom().getHotel().getId();
                     
@@ -918,7 +934,7 @@ public class Inicia extends javax.swing.JFrame {
                     HotelTextField.setText(Long.toString(hotelId));
                     
                 } else {
-                   JOptionPane.showMessageDialog(null, "Não há reservas para o CPF consultado");
+                   JOptionPane.showMessageDialog(null, "Não há reservas nessa data para o CPF consultado");
                 }
             } catch (ParseException e) {
                 JOptionPane.showMessageDialog(null, "Erro de Parse");
@@ -959,6 +975,38 @@ public class Inicia extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_checkoutSearchAccomodationsButtonActionPerformed
+
+    private void CheckInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckInButtonActionPerformed
+        var cpf = CPFSearchTextField.getText();
+       
+        if (HotelTextField.getText().length() > 0 && RoomTextField.getText().length() > 0 && CPFSearchTextField.getText().length() > 0) {     
+            var customer = customerService.getCustomerByCPF(cpf);
+            
+            if (!customer.isPresent()) {
+                JOptionPane.showMessageDialog(null, "CPF não preenchido");
+            }
+            
+            SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+            
+            var customerInstance = customer.get();
+            try {
+                Date dataUsuario = sdf1.parse(String.format("%s/07/2022", DayTextField.getText()));
+                var reservation = reservationService.getReservationByCustomerAndDate(customerInstance, dataUsuario);
+                
+                if (!reservation.isEmpty()) {
+                    var reservationInstance = reservation.get(0);
+                    
+                    var result = accomodationService.saveAccomodation(customerInstance, dataUsuario, reservationInstance);
+                    
+                    JOptionPane.showMessageDialog(null, "Check-in feito com sucesso!");
+                } else {
+                   JOptionPane.showMessageDialog(null, "Não há reservas nessa data para o CPF consultado");
+                }
+            } catch (ParseException e) {
+                JOptionPane.showMessageDialog(null, "Erro de Parse");
+            } 
+        }
+    }//GEN-LAST:event_CheckInButtonActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -966,6 +1014,7 @@ public class Inicia extends javax.swing.JFrame {
     private javax.swing.JTextField CPFSearchTextField;
     private javax.swing.JTextField CPFTextField;
     private javax.swing.JTextField CapacityTextField;
+    private javax.swing.JButton CheckInButton;
     private javax.swing.JTextField CustomerBirthDateTextField;
     private javax.swing.JTextField CustomerNameTextField;
     private javax.swing.JTextField DayTextField;
@@ -977,8 +1026,6 @@ public class Inicia extends javax.swing.JFrame {
     private javax.swing.JTextField ReservationDay;
     private javax.swing.JTextField RoomTextField;
     private javax.swing.JButton SearchCustomerButton;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JTextField checkoutCheckInDateField;
     private javax.swing.JTextField checkoutCpfTextField;
     private javax.swing.JTextField checkoutCustomerBirthDateField;
@@ -991,8 +1038,6 @@ public class Inicia extends javax.swing.JFrame {
     private javax.swing.JTextField checkoutRoomIdField;
     private javax.swing.JButton checkoutSearchAccomodationsButton;
     private javax.swing.JButton confirmCheckoutButton;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1037,29 +1082,5 @@ public class Inicia extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField20;
-    private javax.swing.JTextField jTextField22;
-    private javax.swing.JTextField jTextField23;
-    private javax.swing.JTextField jTextField26;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField25;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }
