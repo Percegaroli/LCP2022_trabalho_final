@@ -6,6 +6,7 @@ package unesp.lcp.LCP2022.forms;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -886,6 +887,7 @@ public class Inicia extends javax.swing.JFrame {
                 var reservation = accomodation.get().getReservation();
                 var room = reservation.getRoom();
                 var hotel = room.getHotel();
+                var dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 checkoutCustomerCPFField.setText(customer.getCpf());
                 checkoutCustomerNameField.setText(customer.getName());
                 checkoutDaysAccomodatedField.setText(String.valueOf(reservation.getDaysReserved()));
@@ -894,8 +896,8 @@ public class Inicia extends javax.swing.JFrame {
                 checkoutRoomIdField.setText(String.valueOf(room.getId()));
                 checkoutRoomCapacityField.setText(String.valueOf(room.getCapacity()));
                 accomodationToCheckout = new AccomodationToCheckout(cpf, reservation.getId());
-                checkoutCustomerBirthDateField.setText(formatDate(customer.getBirthDate()));
-                checkoutCheckInDateField.setText(formatDate(accomodation.get().getCheckinDate()));
+                checkoutCustomerBirthDateField.setText(dateFormat.format(customer.getBirthDate()));
+                checkoutCheckInDateField.setText(dateFormat.format(accomodation.get().getCheckinDate()));
             }
             else {
                 JOptionPane.showMessageDialog(null, "Esse hóspede não possuí uma hospedagem na rede de hotéis");
@@ -908,9 +910,6 @@ public class Inicia extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_checkoutSearchAccomodationsButtonActionPerformed
 
-    private String formatDate(Date date){
-        return String.format("%d/%d/%d", date.getDate(), date.getMonth(), 1900 + date.getYear());
-    }
     private void clearAccomodationData(){
         accomodationToCheckout = null;
         checkoutCustomerCPFField.setText("");
