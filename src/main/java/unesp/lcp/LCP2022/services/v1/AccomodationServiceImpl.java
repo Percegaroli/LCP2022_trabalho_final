@@ -4,6 +4,7 @@
  */
 package unesp.lcp.LCP2022.services.v1;
 
+import java.util.Date;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,19 @@ public class AccomodationServiceImpl implements AccomodationService {
     @Override
     public Optional<Accomodation> findAccomodationByCustomerCPF(String cpf){
         return accomodationRepository
-                    .findAllByCustomerCpf(cpf)
+                    .findAllByCustomerCpfAndCheckoutDateIsNull(cpf)
                     .stream()
                     .findFirst();
+    }
+    
+    @Override
+    public Optional<Accomodation> makeCheckout(String cpf, long reservationId){
+        var accomodation = accomodationRepository.findByCustomerCpfAndReservationId(cpf, reservationId);
+        if (accomodation.isPresent()){
+            accomodation.get().setCheckoutDate(new Date());
+            accomodationRepository.save(accomodation.get());
+            return accomodation;
+        }
+        return null;
     }
 }
