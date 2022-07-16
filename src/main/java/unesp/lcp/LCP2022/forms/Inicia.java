@@ -1021,7 +1021,13 @@ public class Inicia extends javax.swing.JFrame {
                 if (!reservation.isEmpty()) {
                     var reservationInstance = reservation.get(0);
                     
-                    var result = accomodationService.saveAccomodation(customerInstance, dataUsuario, reservationInstance);
+                    try {
+                        var result = accomodationService.saveAccomodation(customerInstance, dataUsuario, reservationInstance);
+                    }
+                    catch (Exception e){
+                        JOptionPane.showMessageDialog(null, "Não foi possivel fazer o check-in");
+                        return;
+                    }
                     
                     JOptionPane.showMessageDialog(null, "Check-in feito com sucesso!");
                 } else {
@@ -1046,7 +1052,7 @@ public class Inicia extends javax.swing.JFrame {
         checkoutRoomCapacityField.setText("");
     }
     
-    private void confirmCheckoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmCheckoutButtonActionPerformed
+    private void confirmCheckoutButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                      
         if (accomodationToCheckout != null){
             var accomodation = accomodationService.makeCheckout(accomodationToCheckout.getCustomerCPF(), accomodationToCheckout.getReservationId());
             if (accomodation.isPresent()){
@@ -1055,7 +1061,7 @@ public class Inicia extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Checkout realizado com sucesso!");
             }
         }
-    }//GEN-LAST:event_confirmCheckoutButtonActionPerformed    
+    }                                                         
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CEPTextField;
