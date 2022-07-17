@@ -4,7 +4,10 @@
  */
 package unesp.lcp.LCP2022.services.v1;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +41,22 @@ public class AccomodationServiceImpl implements AccomodationService {
             return accomodation;
         }
         return null;
+    }
+    
+    @Override
+    public List<Integer> getDaysAccomodation(Accomodation Acc, int daysReserved){
+        int i;
+        Date data;
+        List<Integer> diasHospedado = new ArrayList<Integer>();
+        data = Acc.getCheckinDate();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(data);
+        int dia = cal.get(Calendar.DAY_OF_MONTH);
+        if(data.getMonth() == 7){
+            for(i=0; i<daysReserved; i++){
+                diasHospedado.add(dia + i);
+            }
+        }
+        return diasHospedado;
     }
 }

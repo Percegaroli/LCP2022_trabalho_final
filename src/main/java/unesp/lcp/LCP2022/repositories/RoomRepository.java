@@ -4,7 +4,10 @@
  */
 package unesp.lcp.LCP2022.repositories;
 
+import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import unesp.lcp.LCP2022.models.Hotel;
 import unesp.lcp.LCP2022.models.Room;
 
 /**
@@ -12,5 +15,6 @@ import unesp.lcp.LCP2022.models.Room;
  * @author Bruno
  */
 public interface RoomRepository extends JpaRepository<Room, Long> {
-    
+    List<Room> findAllByHotel(Optional<Hotel> hotel);
+    Room findById(long id);
 }

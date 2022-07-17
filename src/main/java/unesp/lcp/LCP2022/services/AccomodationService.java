@@ -4,6 +4,7 @@
  */
 package unesp.lcp.LCP2022.services;
 
+import java.util.List;
 import java.util.Optional;
 import unesp.lcp.LCP2022.models.Accomodation;
 
@@ -15,4 +16,6 @@ public interface AccomodationService {
      Optional<Accomodation> findAccomodationByCustomerCPF(String cpf);
      
      Optional<Accomodation> makeCheckout(String cpf, long reservationId);
+     
+     List<Integer> getDaysAccomodation(Accomodation  Acc, int daysReserved);
 }

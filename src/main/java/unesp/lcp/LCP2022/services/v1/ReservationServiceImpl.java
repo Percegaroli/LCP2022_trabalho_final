@@ -4,9 +4,16 @@
  */
 package unesp.lcp.LCP2022.services.v1;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import unesp.lcp.LCP2022.DTOs.ReservationDTO;
+import unesp.lcp.LCP2022.models.Customer;
 import unesp.lcp.LCP2022.models.Reservation;
+import unesp.lcp.LCP2022.models.Room;
 import unesp.lcp.LCP2022.repositories.CustomerRepository;
 import unesp.lcp.LCP2022.repositories.ReservationRepository;
 import unesp.lcp.LCP2022.repositories.RoomRepository;
@@ -51,5 +58,32 @@ public class ReservationServiceImpl implements ReservationService {
                 .build();
         
         return reservationRepository.save(reservation);
-    }  
+    }
+    
+    @Override
+    public List<Reservation> getReservationByRoom(Optional<Room> room){
+        return reservationRepository.findAllByRoom(room);
+    }
+    
+    @Override
+    public List<Integer> getDaysReservation(Reservation reserv){
+        int i;
+        Date data;
+        List<Integer> diasReservados = new ArrayList<Integer>();
+        data = reserv.getCheckinDate();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(data);
+        int dia = cal.get(Calendar.DAY_OF_MONTH);
+        if(cal.get(Calendar.MONTH) == 7){
+            for(i=0; i<reserv.getDaysReserved(); i++){
+                diasReservados.add(dia + i);
+            }
+        }
+        return diasReservados;
+    }
+    
+    @Override
+    public List<Reservation> getReservationByCustomer(Customer customer){
+        return reservationRepository.findAllByCustomer(customer);
+    }
 }

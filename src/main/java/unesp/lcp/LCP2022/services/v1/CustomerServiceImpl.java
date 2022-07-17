@@ -4,6 +4,7 @@
  */
 package unesp.lcp.LCP2022.services.v1;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,15 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public Optional<Customer> getCustomerByCPF(String cpf) {
         return customerRepository.findByCpf(cpf);
+    }
+    
+    @Override
+    public Customer getCustomerByName(String name){
+        return customerRepository.findByName(name);
+    }
+    
+    @Override
+    public List<Customer> getAll(){
+        return customerRepository.findAllCustomers();
     }
 }

@@ -6,14 +6,14 @@ package unesp.lcp.LCP2022.services;
 
 import java.util.List;
 import java.util.Optional;
-import unesp.lcp.LCP2022.models.Customer;
+import unesp.lcp.LCP2022.models.Hotel;
+import unesp.lcp.LCP2022.models.Room;
 
 /**
  *
- * @author brunopercegaroli
+ * @author Lucas Ghisloti
  */
-public interface CustomerService {
-    public Optional<Customer> getCustomerByCPF(String cpf);
-    public List<Customer> getAll();
-    public Customer getCustomerByName(String name);
+public interface RoomService {
+    public Optional<Room> getRoomById(Long id);
+    public List<Room> getRoomsByHotel(Optional<Hotel> hotel);
 }

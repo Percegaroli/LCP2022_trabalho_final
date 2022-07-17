@@ -4,13 +4,18 @@
  */
 package unesp.lcp.LCP2022.repositories;
 
+import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import unesp.lcp.LCP2022.models.Customer;
 import unesp.lcp.LCP2022.models.Reservation;
+import unesp.lcp.LCP2022.models.Room;
 
 /**
  *
  * @author Bruno
  */
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    
+    List<Reservation> findAllByRoom(Optional<Room> room);
+    List<Reservation> findAllByCustomer(Customer customer);
 }

@@ -4,13 +4,23 @@
  */
 package unesp.lcp.LCP2022.services;
 
+import java.util.List;
+import java.util.Optional;
 import unesp.lcp.LCP2022.DTOs.ReservationDTO;
+import unesp.lcp.LCP2022.models.Customer;
 import unesp.lcp.LCP2022.models.Reservation;
+import unesp.lcp.LCP2022.models.Room;
 
 /**
  *
  * @author Bruno
  */
 public interface ReservationService {
-     public Reservation reservateRoom(ReservationDTO reservationDTO);
+    public Reservation reservateRoom(ReservationDTO reservationDTO);
+    
+    public List<Reservation> getReservationByRoom(Optional<Room> room);
+   
+    public List<Integer> getDaysReservation(Reservation reserv);
+    
+   public List<Reservation> getReservationByCustomer(Customer customer); 
 }
