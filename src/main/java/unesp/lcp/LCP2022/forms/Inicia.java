@@ -138,9 +138,6 @@ public class Inicia extends javax.swing.JFrame {
         checkoutDaysAccomodatedField = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         confirmCheckoutButton = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -718,47 +715,6 @@ public class Inicia extends javax.swing.JFrame {
         jTabbedPane1.addTab("Check-out", jPanel3);
         jPanel3.getAccessibleContext().setAccessibleName("tabCheckOut");
 
-        jPanel4.setName("tabServicos"); // NOI18N
-
-        jTable2.setBackground(new java.awt.Color(255, 214, 232));
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Nº", "Serviço", "Disponível no Hotel"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable2.setSelectionBackground(new java.awt.Color(173, 131, 200));
-        jScrollPane2.setViewportView(jTable2);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jTabbedPane1.addTab("Serviços", jPanel4);
-        jPanel4.getAccessibleContext().setAccessibleName("tabServicos");
-
         jPanel1.setName("tabHoteis"); // NOI18N
         jPanel1.setLayout(new java.awt.CardLayout());
 
@@ -1063,7 +1019,15 @@ public class Inicia extends javax.swing.JFrame {
     }//GEN-LAST:event_tbHoteisFocusGained
 
     private void confirmCheckoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmCheckoutButtonActionPerformed
-        // TODO add your handling code here:
+
+        if (accomodationToCheckout != null){
+            var accomodation = accomodationService.makeCheckout(accomodationToCheckout.getCustomerCPF(), accomodationToCheckout.getReservationId());
+            if (accomodation.isPresent()){
+                clearAccomodationData();
+                checkoutCpfTextField.setText("");
+                JOptionPane.showMessageDialog(null, "Checkout realizado com sucesso!");
+            }
+        }
     }//GEN-LAST:event_confirmCheckoutButtonActionPerformed
 
     private void checkoutSearchAccomodationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutSearchAccomodationsButtonActionPerformed
@@ -1206,18 +1170,7 @@ public class Inicia extends javax.swing.JFrame {
         checkoutRoomFloorField.setText("");
         checkoutRoomIdField.setText("");
         checkoutRoomCapacityField.setText("");
-    }
-    
-    private void confirmCheckoutButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                      
-        if (accomodationToCheckout != null){
-            var accomodation = accomodationService.makeCheckout(accomodationToCheckout.getCustomerCPF(), accomodationToCheckout.getReservationId());
-            if (accomodation.isPresent()){
-                clearAccomodationData();
-                checkoutCpfTextField.setText("");
-                JOptionPane.showMessageDialog(null, "Checkout realizado com sucesso!");
-            }
-        }
-    }                                                         
+    }                                                        
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CEPTextField;
@@ -1284,16 +1237,13 @@ public class Inicia extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTable tbHoteis;
     private javax.swing.JTable tbQuartos;
