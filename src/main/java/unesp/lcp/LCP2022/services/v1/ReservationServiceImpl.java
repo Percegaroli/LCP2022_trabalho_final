@@ -45,17 +45,6 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation reservateRoom(ReservationDTO reservationDTO){
         var customer = customerRepository.findById(reservationDTO.getCustomerCPF());
         var room = roomRepository.findById(reservationDTO.getRoomId());
-        if (customer.isEmpty() || room.isEmpty()){
-            /*
-            TODO: Dar um erro com a mensagem explicativa para o front
-            */
-            return null;
-        }
-        
-        /*
-        TODO: verificar se o quarto está disponível
-        */
-        
         var reservation = Reservation.builder()
                 .customer(customer.get())
                 .checkinDate(reservationDTO.getStartDate())
@@ -64,7 +53,6 @@ public class ReservationServiceImpl implements ReservationService {
                 .room(room.get())
                 .price(room.get().getBasePricePerDay())
                 .build();
-        
         return reservationRepository.save(reservation);
     }
     
