@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import unesp.lcp.LCP2022.DTOs.ReservationDTO;
 import unesp.lcp.LCP2022.models.Customer;
 import unesp.lcp.LCP2022.models.Reservation;
@@ -23,6 +24,7 @@ import unesp.lcp.LCP2022.services.ReservationService;
  *
  * @author Bruno
  */
+@Service
 public class ReservationServiceImpl implements ReservationService {
     @Autowired
     private CustomerRepository customerRepository;
@@ -32,6 +34,12 @@ public class ReservationServiceImpl implements ReservationService {
     
     @Autowired
     private RoomRepository roomRepository;
+    
+    @Override
+    public List<Reservation> getReservationByCustomerAndDate(Customer customer, Date date){
+        var reservations = this.reservationRepository.findByCustomerAndCheckinDate(customer, date);
+        return reservations;
+    }
     
     @Override
     public Reservation reservateRoom(ReservationDTO reservationDTO){
