@@ -10,7 +10,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -50,19 +49,16 @@ public class Inicia extends javax.swing.JFrame {
     private RoomService roomServicos;
     
     @Autowired
-    private CustomerService customerServicos;
+    private CustomerService customerService;
     
     @Autowired
-    private ReservationService reservationService;
+    private ReservationService reservationServicos;
     
     @Autowired
     private AccomodationService accomodationService;
     
     @Autowired
     private AccomodationToCheckout accomodationToCheckout;
-    
-    @Autowired
-    private ReservationService reservationServicos;
 
     /**
      * Creates new form Inicia
@@ -149,11 +145,11 @@ public class Inicia extends javax.swing.JFrame {
         tbHoteis = new javax.swing.JTable();
         jLabel22 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
+        cbCadastros = new javax.swing.JComboBox<>();
         jLabel27 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbQuartos = new javax.swing.JTable();
-        cbCadastros = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         ReservationDay = new javax.swing.JComboBox<>();
 
         jTextArea1.setColumns(20);
@@ -407,10 +403,6 @@ public class Inicia extends javax.swing.JFrame {
                                     .addComponent(CapacityTextField)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(48, 48, 48)
-
-                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(102, Short.MAX_VALUE))
-
                         .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -463,13 +455,6 @@ public class Inicia extends javax.swing.JFrame {
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
                     .addComponent(HotelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(RoomTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(FloorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -758,7 +743,7 @@ public class Inicia extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -799,6 +784,11 @@ public class Inicia extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbHoteis.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tbHoteisFocusGained(evt);
+            }
+        });
         tbHoteis.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbHoteisMouseClicked(evt);
@@ -810,7 +800,7 @@ public class Inicia extends javax.swing.JFrame {
 
         jLabel24.setText("De julho de 2022");
 
-        jLabel27.setText("Selecione o Cadastro");
+        jLabel27.setText("Selecione um Cadastro");
 
         tbQuartos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -820,7 +810,7 @@ public class Inicia extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Andar", "Capacidade", "Diária", "Tipo", "Disponível"
+                "Andar", "Capacidade", "Tipo", "Diária", "Disponível"
             }
         ) {
             Class[] types = new Class [] {
@@ -833,10 +823,10 @@ public class Inicia extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(tbQuartos);
 
-        jButton2.setText("Reservar");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButton1.setText("Fazer Reserva");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
+                jButton1MouseClicked(evt);
             }
         });
 
@@ -847,24 +837,25 @@ public class Inicia extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(94, 94, 94)
+                .addGap(166, 166, 166)
+                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(ReservationDay, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(78, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(84, 84, 84)
-                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ReservationDay, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbCadastros, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(74, 74, 74)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(107, Short.MAX_VALUE))
+                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbCadastros, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(113, 113, 113))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -876,16 +867,16 @@ public class Inicia extends javax.swing.JFrame {
                     .addComponent(ReservationDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel27)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(12, 12, 12)
                         .addComponent(cbCadastros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(10, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(13, 13, 13))
         );
 
         jPanel1.add(jPanel5, "card3");
@@ -897,13 +888,14 @@ public class Inicia extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 457, Short.MAX_VALUE)
         );
 
         jTabbedPane1.getAccessibleContext().setAccessibleName("mainMenu");
@@ -930,16 +922,20 @@ public class Inicia extends javax.swing.JFrame {
             model.addRow(columns.toArray());
         }
         
-        var customers = customerServicos.getAll();
+        var customers = customerService.getAll();
         for(var cust: customers){
             cbCadastros.addItem(cust.getName());
         }
     }//GEN-LAST:event_formWindowActivated
 
+    private void tbHoteisFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tbHoteisFocusGained
+        
+    }//GEN-LAST:event_tbHoteisFocusGained
+
     private void SearchCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchCustomerButtonActionPerformed
         System.out.printf("%s\n", CPFSearchTextField.getText());
         var cpf = CPFSearchTextField.getText();
-        var customer = customerServicos.getCustomerByCPF(cpf);
+        var customer = customerService.getCustomerByCPF(cpf);
         
         if (customer.isPresent()) {
             var customerInstance = customer.get();
@@ -960,7 +956,7 @@ public class Inicia extends javax.swing.JFrame {
             try {
                 Date dataUsuario = sdf1.parse(String.format("%s/07/2022", DayTextField.getText()));
                 System.out.println(dataUsuario);    
-                var reservation = reservationService.getReservationByCustomerAndDate(customerInstance, dataUsuario);
+                var reservation = reservationServicos.getReservationByCustomerAndDate(customerInstance, dataUsuario);
                 
                 if (!reservation.isEmpty()) {
                     var reservationInstance = reservation.get(0);
@@ -1027,7 +1023,7 @@ public class Inicia extends javax.swing.JFrame {
         var cpf = CPFSearchTextField.getText();
        
         if (HotelTextField.getText().length() > 0 && RoomTextField.getText().length() > 0 && CPFSearchTextField.getText().length() > 0) {     
-            var customer = customerServicos.getCustomerByCPF(cpf);
+            var customer = customerService.getCustomerByCPF(cpf);
             
             if (!customer.isPresent()) {
                 JOptionPane.showMessageDialog(null, "CPF não preenchido");
@@ -1038,7 +1034,7 @@ public class Inicia extends javax.swing.JFrame {
             var customerInstance = customer.get();
             try {
                 Date dataUsuario = sdf1.parse(String.format("%s/07/2022", DayTextField.getText()));
-                var reservation = reservationService.getReservationByCustomerAndDate(customerInstance, dataUsuario);
+                var reservation = reservationServicos.getReservationByCustomerAndDate(customerInstance, dataUsuario);
                 
                 if (!reservation.isEmpty()) {
                     var reservationInstance = reservation.get(0);
@@ -1060,31 +1056,6 @@ public class Inicia extends javax.swing.JFrame {
             } 
         }
     }//GEN-LAST:event_CheckInButtonActionPerformed
-
-    private void clearAccomodationData(){
-        accomodationToCheckout = null;
-        checkoutCustomerCPFField.setText("");
-        checkoutCustomerNameField.setText("");
-        checkoutCustomerBirthDateField.setText("");
-        checkoutCheckInDateField.setText("");
-        checkoutDaysAccomodatedField.setText("");
-        checkoutHotelNameField.setText("");
-        checkoutRoomFloorField.setText("");
-        checkoutRoomIdField.setText("");
-        checkoutRoomCapacityField.setText("");
-    }
-    
-    private void confirmCheckoutButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                      
-        if (accomodationToCheckout != null){
-            var accomodation = accomodationService.makeCheckout(accomodationToCheckout.getCustomerCPF(), accomodationToCheckout.getReservationId());
-            if (accomodation.isPresent()){
-                clearAccomodationData();
-                checkoutCpfTextField.setText("");
-                JOptionPane.showMessageDialog(null, "Checkout realizado com sucesso!");
-            }
-        }
-
-    }                                                     
 
     private void tbHoteisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHoteisMouseClicked
         long hotelId = 0;
@@ -1121,12 +1092,12 @@ public class Inicia extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tbHoteisMouseClicked
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         Boolean hopedado = false;
         Boolean fazReserva = true;
         Boolean Reservado = false;
         if(tbQuartos.getValueAt(tbQuartos.getSelectedRow(), 4) == "Sim"){
-            var customer = customerServicos.getCustomerByName(cbCadastros.getSelectedItem().toString());
+            var customer = customerService.getCustomerByName(cbCadastros.getSelectedItem().toString());
             var customAcomodation = accomodationService.findAccomodationByCustomerCPF(customer.getCpf());
             var customReservations = reservationServicos.getReservationByCustomer(customer);
             if(!customReservations.isEmpty()){
@@ -1160,12 +1131,33 @@ public class Inicia extends javax.swing.JFrame {
         }else{
            JOptionPane.showMessageDialog(null, "O Quarto Não está Disponível na Data Escolhida!","Warning",JOptionPane.WARNING_MESSAGE); 
         }
-    }//GEN-LAST:event_jButton2MouseClicked
-    
+    }//GEN-LAST:event_jButton1MouseClicked
 
-    // Variables declaration - do not modify                     
-    private javax.swing.JComboBox<String> ReservationDay;
-    private javax.swing.JComboBox<String> cbCadastros;
+    private void clearAccomodationData(){
+        accomodationToCheckout = null;
+        checkoutCustomerCPFField.setText("");
+        checkoutCustomerNameField.setText("");
+        checkoutCustomerBirthDateField.setText("");
+        checkoutCheckInDateField.setText("");
+        checkoutDaysAccomodatedField.setText("");
+        checkoutHotelNameField.setText("");
+        checkoutRoomFloorField.setText("");
+        checkoutRoomIdField.setText("");
+        checkoutRoomCapacityField.setText("");
+    }
+    
+    private void confirmCheckoutButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                      
+        if (accomodationToCheckout != null){
+            var accomodation = accomodationService.makeCheckout(accomodationToCheckout.getCustomerCPF(), accomodationToCheckout.getReservationId());
+            if (accomodation.isPresent()){
+                clearAccomodationData();
+                checkoutCpfTextField.setText("");
+                JOptionPane.showMessageDialog(null, "Checkout realizado com sucesso!");
+            }
+        }
+    }                                                         
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CEPTextField;
     private javax.swing.JTextField CPFSearchTextField;
     private javax.swing.JTextField CPFTextField;
@@ -1179,8 +1171,10 @@ public class Inicia extends javax.swing.JFrame {
     private javax.swing.JTextField HotelTextField;
     private javax.swing.JTextField HouseNumberTextField;
     private javax.swing.JTextField PhoneTextField;
+    private javax.swing.JComboBox<String> ReservationDay;
     private javax.swing.JTextField RoomTextField;
     private javax.swing.JButton SearchCustomerButton;
+    private javax.swing.JComboBox<String> cbCadastros;
     private javax.swing.JTextField checkoutCheckInDateField;
     private javax.swing.JTextField checkoutCpfTextField;
     private javax.swing.JTextField checkoutCustomerBirthDateField;
@@ -1194,10 +1188,6 @@ public class Inicia extends javax.swing.JFrame {
     private javax.swing.JButton checkoutSearchAccomodationsButton;
     private javax.swing.JButton confirmCheckoutButton;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1241,20 +1231,7 @@ public class Inicia extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField25;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JTable tbHoteis;
     private javax.swing.JTable tbQuartos;
-    // End of variables declaration                   
+    // End of variables declaration//GEN-END:variables
 }
