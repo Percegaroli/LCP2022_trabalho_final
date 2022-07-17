@@ -7,6 +7,7 @@ package unesp.lcp.LCP2022.services.v1;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import unesp.lcp.LCP2022.models.Hotel;
 import unesp.lcp.LCP2022.models.Room;
 import unesp.lcp.LCP2022.repositories.RoomRepository;
@@ -16,6 +17,7 @@ import unesp.lcp.LCP2022.services.RoomService;
  *
  * @author Lucas Ghisloti
  */
+@Service
 public class RoomServiceImpl implements RoomService{
     @Autowired
     private RoomRepository roomRepository;

@@ -61,11 +61,11 @@ public class AccomodationServiceImpl implements AccomodationService {
     }
     
     @Override
-    public List<Integer> getDaysAccomodation(Accomodation Acc, int daysReserved){
+    public List<Integer> getDaysAccomodation(Optional<Accomodation> Acc, int daysReserved){
         int i;
         Date data;
         List<Integer> diasHospedado = new ArrayList<Integer>();
-        data = Acc.getCheckinDate();
+        data = Acc.get().getCheckinDate();
         Calendar cal = Calendar.getInstance();
         cal.setTime(data);
         int dia = cal.get(Calendar.DAY_OF_MONTH);

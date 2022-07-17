@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import unesp.lcp.LCP2022.models.Hotel;
 import unesp.lcp.LCP2022.services.AccomodationService;
 import unesp.lcp.LCP2022.services.CustomerService;
@@ -40,6 +41,7 @@ class AccomodationToCheckout {
  * @author Lucas Ghisloti
  */
 @Component
+@Service
 public class Inicia extends javax.swing.JFrame {
     
     @Autowired

@@ -19,5 +19,5 @@ public interface AccomodationService {
      Optional<Accomodation> findAccomodationByCustomerCPF(String cpf);
      Accomodation saveAccomodation(Customer customer, Date checkinDate, Reservation reservation);
      Optional<Accomodation> makeCheckout(String cpf, long reservationId);
-     List<Integer> getDaysAccomodation(Accomodation  Acc, int daysReserved);
+     List<Integer> getDaysAccomodation(Optional<Accomodation>  Acc, int daysReserved);
 }
