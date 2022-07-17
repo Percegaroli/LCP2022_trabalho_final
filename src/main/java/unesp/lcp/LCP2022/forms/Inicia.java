@@ -407,10 +407,10 @@ public class Inicia extends javax.swing.JFrame {
                                     .addComponent(CapacityTextField)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(48, 48, 48)
-<<<<<<< HEAD
+
                         .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(102, Short.MAX_VALUE))
-=======
+
                         .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,7 +420,6 @@ public class Inicia extends javax.swing.JFrame {
                         .addGap(194, 194, 194)
                         .addComponent(CheckInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(75, Short.MAX_VALUE))
->>>>>>> d1f98590e93060a73d6162b1192512ec67d11cbb
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -464,7 +463,6 @@ public class Inicia extends javax.swing.JFrame {
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-<<<<<<< HEAD
                     .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -472,7 +470,6 @@ public class Inicia extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(34, Short.MAX_VALUE))
-=======
                     .addComponent(HotelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(RoomTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(FloorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -480,7 +477,6 @@ public class Inicia extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(CheckInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
->>>>>>> d1f98590e93060a73d6162b1192512ec67d11cbb
         );
 
         jLayeredPane1.getAccessibleContext().setAccessibleName("Insira o CPF do Cliente");
@@ -943,7 +939,7 @@ public class Inicia extends javax.swing.JFrame {
     private void SearchCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchCustomerButtonActionPerformed
         System.out.printf("%s\n", CPFSearchTextField.getText());
         var cpf = CPFSearchTextField.getText();
-        var customer = customerService.getCustomerByCPF(cpf);
+        var customer = customerServicos.getCustomerByCPF(cpf);
         
         if (customer.isPresent()) {
             var customerInstance = customer.get();
@@ -1031,7 +1027,7 @@ public class Inicia extends javax.swing.JFrame {
         var cpf = CPFSearchTextField.getText();
        
         if (HotelTextField.getText().length() > 0 && RoomTextField.getText().length() > 0 && CPFSearchTextField.getText().length() > 0) {     
-            var customer = customerService.getCustomerByCPF(cpf);
+            var customer = customerServicos.getCustomerByCPF(cpf);
             
             if (!customer.isPresent()) {
                 JOptionPane.showMessageDialog(null, "CPF não preenchido");
@@ -1170,10 +1166,6 @@ public class Inicia extends javax.swing.JFrame {
     // Variables declaration - do not modify                     
     private javax.swing.JComboBox<String> ReservationDay;
     private javax.swing.JComboBox<String> cbCadastros;
-
-    }                                                         
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CEPTextField;
     private javax.swing.JTextField CPFSearchTextField;
     private javax.swing.JTextField CPFTextField;
@@ -1187,10 +1179,8 @@ public class Inicia extends javax.swing.JFrame {
     private javax.swing.JTextField HotelTextField;
     private javax.swing.JTextField HouseNumberTextField;
     private javax.swing.JTextField PhoneTextField;
-    private javax.swing.JTextField ReservationDay;
     private javax.swing.JTextField RoomTextField;
     private javax.swing.JButton SearchCustomerButton;
->>>>>>> d1f98590e93060a73d6162b1192512ec67d11cbb
     private javax.swing.JTextField checkoutCheckInDateField;
     private javax.swing.JTextField checkoutCpfTextField;
     private javax.swing.JTextField checkoutCustomerBirthDateField;
@@ -1203,14 +1193,11 @@ public class Inicia extends javax.swing.JFrame {
     private javax.swing.JTextField checkoutRoomIdField;
     private javax.swing.JButton checkoutSearchAccomodationsButton;
     private javax.swing.JButton confirmCheckoutButton;
-<<<<<<< HEAD
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-=======
     private javax.swing.JComboBox<String> jComboBox1;
->>>>>>> d1f98590e93060a73d6162b1192512ec67d11cbb
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1254,7 +1241,6 @@ public class Inicia extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextArea jTextArea1;
-<<<<<<< HEAD
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
@@ -1270,7 +1256,5 @@ public class Inicia extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField9;
     private javax.swing.JTable tbHoteis;
     private javax.swing.JTable tbQuartos;
-=======
->>>>>>> d1f98590e93060a73d6162b1192512ec67d11cbb
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 }

@@ -217,11 +217,8 @@
                               <Component id="CheckInButton" min="-2" pref="236" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-<<<<<<< HEAD
                       <EmptySpace pref="102" max="32767" attributes="0"/>
-=======
                       <EmptySpace pref="75" max="32767" attributes="0"/>
->>>>>>> d1f98590e93060a73d6162b1192512ec67d11cbb
                   </Group>
               </Group>
             </DimensionLayout>
@@ -280,15 +277,12 @@
                           <Component id="FloorTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="CapacityTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-<<<<<<< HEAD
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jButton4" min="-2" pref="35" max="-2" attributes="0"/>
                       <EmptySpace pref="34" max="32767" attributes="0"/>
-=======
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="CheckInButton" min="-2" pref="35" max="-2" attributes="0"/>
                       <EmptySpace pref="19" max="32767" attributes="0"/>
->>>>>>> d1f98590e93060a73d6162b1192512ec67d11cbb
                   </Group>
               </Group>
             </DimensionLayout>
