@@ -4,7 +4,11 @@
  */
 package unesp.lcp.LCP2022.services;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import unesp.lcp.LCP2022.DTOs.ReservationDTO;
+import unesp.lcp.LCP2022.models.Customer;
 import unesp.lcp.LCP2022.models.Reservation;
 
 /**
@@ -12,5 +16,7 @@ import unesp.lcp.LCP2022.models.Reservation;
  * @author Bruno
  */
 public interface ReservationService {
-     public Reservation reservateRoom(ReservationDTO reservationDTO);
+    public List<Reservation> getReservationByCustomerAndDate(Customer customer, Date date);
+    
+    public Reservation reservateRoom(ReservationDTO reservationDTO);
 }
