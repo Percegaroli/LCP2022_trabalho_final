@@ -10,6 +10,6 @@ import unesp.lcp.LCP2022.models.Customer;
 
 
 public interface CustomerRepository extends JpaRepository<Customer, String> {
-    Optional<Customer> findByCpf(String cpf);
-    Optional<Customer> findByName(String name);
+    public Optional<Customer> findByCpf(String cpf);
+    public Optional<Customer> findByName(String name);
 }

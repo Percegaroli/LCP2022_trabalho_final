@@ -17,7 +17,7 @@ import unesp.lcp.LCP2022.models.Room;
  * @author Bruno
  */
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    List<Reservation> findAllByRoom(Optional<Room> room);
-    List<Reservation> findAllByCustomer(Customer customer);
-    List<Reservation> findByCustomerAndCheckinDate(Customer customer, Date checkinDate);
+    public List<Reservation> findAllByRoom(Optional<Room> room);
+    public List<Reservation> findAllByCustomer(Customer customer);
+    public List<Reservation> findByCustomerAndCheckinDate(Customer customer, Date checkinDate);
 }

@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import unesp.lcp.LCP2022.models.Hotel;
 
 public interface HotelRepository extends JpaRepository<Hotel, Long>  {
-    List<Hotel> findAllByName(String name);
+    public List<Hotel> findAllByName(String name);
 }

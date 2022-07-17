@@ -61,8 +61,6 @@ public class Inicia extends javax.swing.JFrame {
     private AccomodationService accomodationService;
     
     private AccomodationToCheckout accomodationToCheckout;
-    
-    private ReservationDTO reservationDTO;
 
     /**
      * Creates new form Inicia
@@ -840,9 +838,9 @@ public class Inicia extends javax.swing.JFrame {
         });
 
         ReservationDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-        ReservationDay.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ReservationDayMouseClicked(evt);
+        ReservationDay.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                ReservationDayFocusLost(evt);
             }
         });
 
@@ -862,7 +860,7 @@ public class Inicia extends javax.swing.JFrame {
                                     .addGroup(jPanel5Layout.createSequentialGroup()
                                         .addComponent(cbCadastros, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(39, 39, 39)
-                                        .addComponent(accomodationDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(accomodationDays, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel5Layout.createSequentialGroup()
                                         .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(58, 58, 58)
@@ -1091,7 +1089,7 @@ public class Inicia extends javax.swing.JFrame {
         }
         Optional<Hotel> hotel = hotelServicos.getHotelById(hotelId);
         var rooms = roomServicos.getRoomsByHotel(hotel);
-        String header[] = new String[] { "Andar" , "Capacidade", "Diária", "Tipo", "Dispónível na Data"};
+        String header[] = new String[] { "Id", "Andar" , "Capacidade", "Tipo", "Diária", "Dispónível"};
         DefaultTableModel model = new DefaultTableModel(0, 0);
         model.setColumnIdentifiers(header);
         tbQuartos.setModel(model);
@@ -1100,20 +1098,14 @@ public class Inicia extends javax.swing.JFrame {
             columns.add(room.getId().toString());
             columns.add(Integer.toString(room.getFloor()));
             columns.add(Integer.toString(room.getCapacity()));
-            columns.add(Float.toString(room.getBasePricePerDay()));
             columns.add(room.getType().toString());
+            columns.add(Float.toString(room.getBasePricePerDay()));
             var reservas = reservationServicos.getReservationByRoom(roomServicos.getRoomById(room.getId()));
-            if (!reservas.isEmpty()){
-                for(var reserv: reservas){
-                    var diasReservados = reservationServicos.getDaysReservation(reserv);
-                    if(!diasReservados.isEmpty()){
-                        if(diasReservados.contains(Integer.parseInt(ReservationDay.getSelectedItem().toString()))){
-                            columns.add("Não");
-                        }else
-                            columns.add("Sim");
-                    }else
-                        columns.add("Sim");
-                }
+            if(!reservas.isEmpty()){
+                var quartoLivre = reservationServicos.getRoomAvailability(reservas, Integer.parseInt(ReservationDay.getSelectedItem().toString()));
+                if (quartoLivre){
+                    columns.add("Sim");
+                }else columns.add("Não");
             }else columns.add("Sim");
             model.addRow(columns.toArray());
         }
@@ -1127,7 +1119,7 @@ public class Inicia extends javax.swing.JFrame {
             if(!(accomodationDays.getSelectedIndex() == -1)){
                 if(!(tbQuartos.getSelectedRow() == -1)){
                     if(!(tbHoteis.getSelectedRow() == -1)){
-                        if(tbQuartos.getValueAt(tbQuartos.getSelectedRow(), 4) == "Sim"){
+                        if(tbQuartos.getValueAt(tbQuartos.getSelectedRow(), 5) == "Sim"){
                             var customer = customerService.getCustomerByName(cbCadastros.getSelectedItem().toString());
                             if (customer.isPresent()){
                                 var customAcomodation = accomodationService.findAccomodationByCustomerCPF(customer.get().getCpf());
@@ -1141,12 +1133,11 @@ public class Inicia extends javax.swing.JFrame {
                                             }
                                         }
                                     }else{
-                                       for(var reserv: customReservations){
-                                            var diasReservados = reservationServicos.getDaysReservation(reserv);
-                                            if(diasReservados.contains(Integer.parseInt(ReservationDay.getSelectedItem().toString()))){
-                                                Reservado = true;
-                                            }
-                                        } 
+                                        var quartoDisponivel = reservationServicos.getRoomAvailability(customReservations, Integer.parseInt(ReservationDay.getSelectedItem().toString()));
+                                        if(!quartoDisponivel){
+                                            Reservado = true;
+                                        }
+                                         
                                     }    
                                     if(hopedado){
                                         fazReserva = false;
@@ -1156,28 +1147,22 @@ public class Inicia extends javax.swing.JFrame {
                                         fazReserva = false;
                                         JOptionPane.showMessageDialog(null, "Você Já tem uma reserva para a Data Escolhida!","Warning",JOptionPane.WARNING_MESSAGE);
                                     }
+                                }
                                     if(fazReserva){
                                         try {
-                                            reservationDTO.setDays((int) accomodationDays.getSelectedItem());
-                                            var selectedRoomId = (long) tbQuartos.getValueAt(tbQuartos.getSelectedRow(), 0);
-                                            reservationDTO.setRoomId(selectedRoomId);
+                                            var hospedagemDias = (String) accomodationDays.getSelectedItem();
+                                            var selectedRoomId = (String) tbQuartos.getValueAt(tbQuartos.getSelectedRow(), 0);
                                             String dataInicialText = ReservationDay.getSelectedItem().toString()+"/07/2022";
                                             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
                                             Date dataInicial = formato.parse(dataInicialText); 
-                                            reservationDTO.setStartDate(dataInicial);
-                                            var cliente = customerService.getCustomerByName((String) cbCadastros.getSelectedItem());
-                                            if (cliente.isPresent()){
-                                                reservationDTO.setCustomerCPF(cliente.get().getCpf());
-                                                var result = reservationServicos.reservateRoom(reservationDTO);
-                                            }
+                                            var result = reservationServicos.reservateRoom(Integer.parseInt(selectedRoomId), customer.get().getCpf(), dataInicial, Integer.parseInt(hospedagemDias));
                                         }
                                         catch (Exception e){
-                                            JOptionPane.showMessageDialog(null, "Não foi possivel fazer o check-in");
+                                            JOptionPane.showMessageDialog(null, "Não foi possivel fazer a Reserva!"+" "+e.getMessage());
                                             return;
                                         }
                                         JOptionPane.showMessageDialog(null, "Reserva feita com sucesso!");
-                                    }     
-                                }      
+                                    }           
                             }         
                         }else{
                            JOptionPane.showMessageDialog(null, "O Quarto Não está Disponível na Data Escolhida!","Warning",JOptionPane.WARNING_MESSAGE); 
@@ -1196,14 +1181,15 @@ public class Inicia extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
-    private void ReservationDayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReservationDayMouseClicked
+    private void ReservationDayFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ReservationDayFocusLost
+        accomodationDays.removeAllItems();
         int i;
         var diaInicio = Integer.parseInt(ReservationDay.getSelectedItem().toString());
-        for(i=diaInicio; i<31; i++){
+        for(i=diaInicio; i<=31; i++){
             var itemCB = 31 - (i-1);
             accomodationDays.addItem(Integer.toString(itemCB));
         }
-    }//GEN-LAST:event_ReservationDayMouseClicked
+    }//GEN-LAST:event_ReservationDayFocusLost
 
     private void clearAccomodationData(){
         accomodationToCheckout = null;

@@ -4,11 +4,14 @@
  */
 package unesp.lcp.LCP2022.services.v1;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.swing.JOptionPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unesp.lcp.LCP2022.DTOs.ReservationDTO;
@@ -42,16 +45,16 @@ public class ReservationServiceImpl implements ReservationService {
     }
     
     @Override
-    public Reservation reservateRoom(ReservationDTO reservationDTO){
-        var customer = customerRepository.findById(reservationDTO.getCustomerCPF());
-        var room = roomRepository.findById(reservationDTO.getRoomId());
+    public Reservation reservateRoom(int roomID, String customerCPF, Date startDate, int accomodationDays){
+        var customer = customerRepository.findById(customerCPF);
+        var room = roomRepository.findById(roomID);
         var reservation = Reservation.builder()
                 .customer(customer.get())
-                .checkinDate(reservationDTO.getStartDate())
-                .daysReserved(reservationDTO.getDays())
+                .checkinDate(startDate)
+                .daysReserved(accomodationDays)
                 .discount(0)
-                .room(room.get())
-                .price(room.get().getBasePricePerDay())
+                .room(room)
+                .price(room.getBasePricePerDay())
                 .build();
         return reservationRepository.save(reservation);
     }
@@ -62,20 +65,36 @@ public class ReservationServiceImpl implements ReservationService {
     }
     
     @Override
-    public List<Integer> getDaysReservation(Reservation reserv){
+    public Boolean getRoomAvailability(List<Reservation> reservas, int diaReserva){
         int i;
-        Date data;
+        Date data = null;
+        Boolean livre = true;
         List<Integer> diasReservados = new ArrayList<Integer>();
-        data = reserv.getCheckinDate();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(data);
-        int dia = cal.get(Calendar.DAY_OF_MONTH);
-        if(cal.get(Calendar.MONTH) == 7){
-            for(i=0; i<reserv.getDaysReserved(); i++){
-                diasReservados.add(dia + i);
+        var dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
+        for(var reserv: reservas){
+            if(livre){
+                var dataString = dateFormat.format(reserv.getCheckinDate());    
+                try {
+                    data = formato.parse(dataString);
+                } catch (ParseException e){
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(data);
+                int dia = cal.get(Calendar.DAY_OF_MONTH);
+                if(cal.get(Calendar.MONTH) == 6){
+                    for(i=0; i<reserv.getDaysReserved(); i++){
+                        diasReservados.add(dia + i);
+                    }
+                }
+                if(diasReservados.contains(diaReserva)){
+                    livre = false;
+                }else
+                    livre = true;
             }
         }
-        return diasReservados;
+        return livre;
     }
     
     @Override

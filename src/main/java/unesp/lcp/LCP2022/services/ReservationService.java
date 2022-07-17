@@ -17,11 +17,11 @@ import unesp.lcp.LCP2022.models.Room;
  * @author Bruno
  */
 public interface ReservationService {
-    public Reservation reservateRoom(ReservationDTO reservationDTO);
+    public Reservation reservateRoom(int roomID, String customerCPF, Date startDate, int accomodationDays);
     
     public List<Reservation> getReservationByRoom(Optional<Room> room);
    
-    public List<Integer> getDaysReservation(Reservation reserv);
+    public Boolean getRoomAvailability(List<Reservation> reservas, int diaReserva);
     
     public List<Reservation> getReservationByCustomer(Customer customer); 
    

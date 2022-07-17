@@ -15,6 +15,6 @@ import unesp.lcp.LCP2022.models.Room;
  * @author Bruno
  */
 public interface RoomRepository extends JpaRepository<Room, Long> {
-    List<Room> findAllByHotel(Optional<Hotel> hotel);
-    Room findById(long id);
+    public List<Room> findAllByHotel(Optional<Hotel> hotel);
+    public Room findById(long id);
 }
