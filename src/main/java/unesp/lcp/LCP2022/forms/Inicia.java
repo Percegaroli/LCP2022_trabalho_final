@@ -465,7 +465,7 @@ public class Inicia extends javax.swing.JFrame {
                     .addComponent(CapacityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(CheckInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jLayeredPane1.getAccessibleContext().setAccessibleName("Insira o CPF do Cliente");
@@ -927,10 +927,6 @@ public class Inicia extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CPFTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CPFTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CPFTextFieldActionPerformed
-
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:    
         var hotels = hotelServicos.listHotels();
@@ -952,64 +948,123 @@ public class Inicia extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowActivated
 
+    private void ReservationDayFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ReservationDayFocusLost
+        accomodationDays.removeAllItems();
+        int i;
+        var diaInicio = Integer.parseInt(ReservationDay.getSelectedItem().toString());
+        for(i=diaInicio; i<=31; i++){
+            var itemCB = 31 - (i-1);
+            accomodationDays.addItem(Integer.toString(itemCB));
+        }
+    }//GEN-LAST:event_ReservationDayFocusLost
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        Boolean hopedado = false;
+        Boolean fazReserva = true;
+        Boolean Reservado = false;
+        if(!(ReservationDay.getSelectedIndex() == -1)){
+            if(!(accomodationDays.getSelectedIndex() == -1)){
+                if(!(tbQuartos.getSelectedRow() == -1)){
+                    if(!(tbHoteis.getSelectedRow() == -1)){
+                        if(tbQuartos.getValueAt(tbQuartos.getSelectedRow(), 5) == "Sim"){
+                            var customer = customerService.getCustomerByName(cbCadastros.getSelectedItem().toString());
+                            if (customer.isPresent()){
+                                var customAcomodation = accomodationService.findAccomodationByCustomerCPF(customer.get().getCpf());
+                                var customReservations = reservationServicos.getReservationByCustomer(customer.get());
+                                if(!customReservations.isEmpty()){
+                                    if(!customAcomodation.isEmpty()){
+                                        for(var reserv: customReservations){
+                                            var diasHospedados = accomodationService.getDaysAccomodation(customAcomodation, reserv.getDaysReserved());
+                                            if(diasHospedados.contains(Integer.parseInt(ReservationDay.getSelectedItem().toString()))){
+                                                hopedado = true;
+                                            }
+                                        }
+                                    }else{
+                                        var quartoDisponivel = reservationServicos.getRoomAvailability(customReservations, Integer.parseInt(ReservationDay.getSelectedItem().toString()));
+                                        if(!quartoDisponivel){
+                                            Reservado = true;
+                                        }
+
+                                    }
+                                    if(hopedado){
+                                        fazReserva = false;
+                                        JOptionPane.showMessageDialog(null, "Você Ainda Estará no Periodo da Hospedagem atual na Data Escolhida!","Warning",JOptionPane.WARNING_MESSAGE);
+                                    }
+                                    if(Reservado){
+                                        fazReserva = false;
+                                        JOptionPane.showMessageDialog(null, "Você Já tem uma reserva para a Data Escolhida!","Warning",JOptionPane.WARNING_MESSAGE);
+                                    }
+                                }
+                                if(fazReserva){
+                                    try {
+                                        var hospedagemDias = (String) accomodationDays.getSelectedItem();
+                                        var selectedRoomId = (String) tbQuartos.getValueAt(tbQuartos.getSelectedRow(), 0);
+                                        String dataInicialText = ReservationDay.getSelectedItem().toString()+"/07/2022";
+                                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                                        Date dataInicial = formato.parse(dataInicialText);
+                                        var result = reservationServicos.reservateRoom(Integer.parseInt(selectedRoomId), customer.get().getCpf(), dataInicial, Integer.parseInt(hospedagemDias));
+                                    }
+                                    catch (Exception e){
+                                        JOptionPane.showMessageDialog(null, "Não foi possivel fazer a Reserva!"+" "+e.getMessage());
+                                        return;
+                                    }
+                                    JOptionPane.showMessageDialog(null, "Reserva feita com sucesso!");
+                                }
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(null, "O Quarto Não está Disponível na Data Escolhida!","Warning",JOptionPane.WARNING_MESSAGE);
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Selecione um Hotel!","Warning",JOptionPane.WARNING_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Selecione um Quarto!","Warning",JOptionPane.WARNING_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Selecione a Quantidade de Dias de Hospedagem!","Warning",JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Selecione a Data Inicial da Reserva!","Warning",JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void tbHoteisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHoteisMouseClicked
+        long hotelId = 0;
+        var selectedRow = tbHoteis.getSelectedRow();
+        if (selectedRow != -1){
+            hotelId = Integer.parseInt((String) tbHoteis.getValueAt(selectedRow, 0));
+        }
+        Optional<Hotel> hotel = hotelServicos.getHotelById(hotelId);
+        var rooms = roomServicos.getRoomsByHotel(hotel);
+        String header[] = new String[] { "Id", "Andar" , "Capacidade", "Tipo", "Diária", "Dispónível"};
+        DefaultTableModel model = new DefaultTableModel(0, 0);
+        model.setColumnIdentifiers(header);
+        tbQuartos.setModel(model);
+        for (var room : rooms){
+            List<String> columns = new ArrayList();
+            columns.add(room.getId().toString());
+            columns.add(Integer.toString(room.getFloor()));
+            columns.add(Integer.toString(room.getCapacity()));
+            columns.add(room.getType().toString());
+            columns.add(Float.toString(room.getBasePricePerDay()));
+            var reservas = reservationServicos.getReservationByRoom(roomServicos.getRoomById(room.getId()));
+            if(!reservas.isEmpty()){
+                var quartoLivre = reservationServicos.getRoomAvailability(reservas, Integer.parseInt(ReservationDay.getSelectedItem().toString()));
+                if (quartoLivre){
+                    columns.add("Sim");
+                }else columns.add("Não");
+            }else columns.add("Sim");
+            model.addRow(columns.toArray());
+        }
+    }//GEN-LAST:event_tbHoteisMouseClicked
+
     private void tbHoteisFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tbHoteisFocusGained
-        
+
     }//GEN-LAST:event_tbHoteisFocusGained
 
-    private void SearchCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchCustomerButtonActionPerformed
-        System.out.printf("%s\n", CPFSearchTextField.getText());
-        var cpf = CPFSearchTextField.getText();
-        var customer = customerService.getCustomerByCPF(cpf);
-        
-        if (customer.isPresent()) {
-            var customerInstance = customer.get();
-            CEPTextField.setText(customerInstance.getCep());
-            CPFTextField.setText(customerInstance.getCpf());
-            CustomerNameTextField.setText(customerInstance.getName());
-            EmailTextField.setText(customerInstance.getEmail());
-            HouseNumberTextField.setText(customerInstance.getNumber());
-            PhoneTextField.setText(customerInstance.getPhone());
-            
-            var birthDate = customerInstance.getBirthDate();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String date = sdf.format(birthDate);
-            CustomerBirthDateTextField.setText(date);
-            
-            SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
-            
-            try {
-                Date dataUsuario = sdf1.parse(String.format("%s/07/2022", DayTextField.getText()));
-                System.out.println(dataUsuario);    
-                var reservation = reservationServicos.getReservationByCustomerAndDate(customerInstance, dataUsuario);
-                
-                if (!reservation.isEmpty()) {
-                    var reservationInstance = reservation.get(0);
-                    var hotelId = reservationInstance.getRoom().getHotel().getId();
-                    
-                    RoomTextField.setText(Long.toString(reservationInstance.getRoom().getId()));
-                    FloorTextField.setText(Long.toString(reservationInstance.getRoom().getFloor()));
-                    CapacityTextField.setText(Integer.toString(reservationInstance.getRoom().getCapacity()));
-                    HotelTextField.setText(Long.toString(hotelId));
-                    
-                } else {
-                   JOptionPane.showMessageDialog(null, "Não há reservas nessa data para o CPF consultado");
-                }
-            } catch (ParseException e) {
-                JOptionPane.showMessageDialog(null, "Erro de Parse");
-            }
-                      
-        } else {
-            JOptionPane.showMessageDialog(null, "Cliente não cadastrado no sistema");
-        }        
-    }//GEN-LAST:event_SearchCustomerButtonActionPerformed
-
-    private void CPFSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CPFSearchTextFieldActionPerformed
+    private void confirmCheckoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmCheckoutButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CPFSearchTextFieldActionPerformed
-
-    private void DayTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DayTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DayTextFieldActionPerformed
+    }//GEN-LAST:event_confirmCheckoutButtonActionPerformed
 
     private void checkoutSearchAccomodationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutSearchAccomodationsButtonActionPerformed
         var cpf = checkoutCpfTextField.getText();
@@ -1043,26 +1098,30 @@ public class Inicia extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_checkoutSearchAccomodationsButtonActionPerformed
 
+    private void DayTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DayTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DayTextFieldActionPerformed
+
     private void CheckInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckInButtonActionPerformed
         var cpf = CPFSearchTextField.getText();
-       
-        if (HotelTextField.getText().length() > 0 && RoomTextField.getText().length() > 0 && CPFSearchTextField.getText().length() > 0) {     
+
+        if (HotelTextField.getText().length() > 0 && RoomTextField.getText().length() > 0 && CPFSearchTextField.getText().length() > 0) {
             var customer = customerService.getCustomerByCPF(cpf);
-            
+
             if (!customer.isPresent()) {
                 JOptionPane.showMessageDialog(null, "CPF não preenchido");
             }
-            
+
             SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
-            
+
             var customerInstance = customer.get();
             try {
                 Date dataUsuario = sdf1.parse(String.format("%s/07/2022", DayTextField.getText()));
                 var reservation = reservationServicos.getReservationByCustomerAndDate(customerInstance, dataUsuario);
-                
+
                 if (!reservation.isEmpty()) {
                     var reservationInstance = reservation.get(0);
-                    
+
                     try {
                         var result = accomodationService.saveAccomodation(customerInstance, dataUsuario, reservationInstance);
                     }
@@ -1070,126 +1129,71 @@ public class Inicia extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Não foi possivel fazer o check-in");
                         return;
                     }
-                    
+
                     JOptionPane.showMessageDialog(null, "Check-in feito com sucesso!");
                 } else {
-                   JOptionPane.showMessageDialog(null, "Não há reservas nessa data para o CPF consultado");
+                    JOptionPane.showMessageDialog(null, "Não há reservas nessa data para o CPF consultado");
                 }
             } catch (ParseException e) {
                 JOptionPane.showMessageDialog(null, "Erro de Parse");
-            } 
+            }
         }
     }//GEN-LAST:event_CheckInButtonActionPerformed
 
-    private void tbHoteisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHoteisMouseClicked
-        long hotelId = 0;
-        var selectedRow = tbHoteis.getSelectedRow();
-        if (selectedRow != -1){
-            hotelId = Integer.parseInt((String) tbHoteis.getValueAt(selectedRow, 0));
-        }
-        Optional<Hotel> hotel = hotelServicos.getHotelById(hotelId);
-        var rooms = roomServicos.getRoomsByHotel(hotel);
-        String header[] = new String[] { "Id", "Andar" , "Capacidade", "Tipo", "Diária", "Dispónível"};
-        DefaultTableModel model = new DefaultTableModel(0, 0);
-        model.setColumnIdentifiers(header);
-        tbQuartos.setModel(model);
-        for (var room : rooms){
-            List<String> columns = new ArrayList();
-            columns.add(room.getId().toString());
-            columns.add(Integer.toString(room.getFloor()));
-            columns.add(Integer.toString(room.getCapacity()));
-            columns.add(room.getType().toString());
-            columns.add(Float.toString(room.getBasePricePerDay()));
-            var reservas = reservationServicos.getReservationByRoom(roomServicos.getRoomById(room.getId()));
-            if(!reservas.isEmpty()){
-                var quartoLivre = reservationServicos.getRoomAvailability(reservas, Integer.parseInt(ReservationDay.getSelectedItem().toString()));
-                if (quartoLivre){
-                    columns.add("Sim");
-                }else columns.add("Não");
-            }else columns.add("Sim");
-            model.addRow(columns.toArray());
-        }
-    }//GEN-LAST:event_tbHoteisMouseClicked
+    private void CPFTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CPFTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CPFTextFieldActionPerformed
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        Boolean hopedado = false;
-        Boolean fazReserva = true;
-        Boolean Reservado = false;
-        if(!(ReservationDay.getSelectedIndex() == -1)){
-            if(!(accomodationDays.getSelectedIndex() == -1)){
-                if(!(tbQuartos.getSelectedRow() == -1)){
-                    if(!(tbHoteis.getSelectedRow() == -1)){
-                        if(tbQuartos.getValueAt(tbQuartos.getSelectedRow(), 5) == "Sim"){
-                            var customer = customerService.getCustomerByName(cbCadastros.getSelectedItem().toString());
-                            if (customer.isPresent()){
-                                var customAcomodation = accomodationService.findAccomodationByCustomerCPF(customer.get().getCpf());
-                                var customReservations = reservationServicos.getReservationByCustomer(customer.get());
-                                if(!customReservations.isEmpty()){
-                                    if(!customAcomodation.isEmpty()){
-                                        for(var reserv: customReservations){
-                                            var diasHospedados = accomodationService.getDaysAccomodation(customAcomodation, reserv.getDaysReserved());
-                                            if(diasHospedados.contains(Integer.parseInt(ReservationDay.getSelectedItem().toString()))){
-                                                hopedado = true;
-                                            }
-                                        }
-                                    }else{
-                                        var quartoDisponivel = reservationServicos.getRoomAvailability(customReservations, Integer.parseInt(ReservationDay.getSelectedItem().toString()));
-                                        if(!quartoDisponivel){
-                                            Reservado = true;
-                                        }
-                                         
-                                    }    
-                                    if(hopedado){
-                                        fazReserva = false;
-                                        JOptionPane.showMessageDialog(null, "Você Ainda Estará no Periodo da Hospedagem atual na Data Escolhida!","Warning",JOptionPane.WARNING_MESSAGE);
-                                    }
-                                    if(Reservado){
-                                        fazReserva = false;
-                                        JOptionPane.showMessageDialog(null, "Você Já tem uma reserva para a Data Escolhida!","Warning",JOptionPane.WARNING_MESSAGE);
-                                    }
-                                }
-                                    if(fazReserva){
-                                        try {
-                                            var hospedagemDias = (String) accomodationDays.getSelectedItem();
-                                            var selectedRoomId = (String) tbQuartos.getValueAt(tbQuartos.getSelectedRow(), 0);
-                                            String dataInicialText = ReservationDay.getSelectedItem().toString()+"/07/2022";
-                                            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                                            Date dataInicial = formato.parse(dataInicialText); 
-                                            var result = reservationServicos.reservateRoom(Integer.parseInt(selectedRoomId), customer.get().getCpf(), dataInicial, Integer.parseInt(hospedagemDias));
-                                        }
-                                        catch (Exception e){
-                                            JOptionPane.showMessageDialog(null, "Não foi possivel fazer a Reserva!"+" "+e.getMessage());
-                                            return;
-                                        }
-                                        JOptionPane.showMessageDialog(null, "Reserva feita com sucesso!");
-                                    }           
-                            }         
-                        }else{
-                           JOptionPane.showMessageDialog(null, "O Quarto Não está Disponível na Data Escolhida!","Warning",JOptionPane.WARNING_MESSAGE); 
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Selecione um Hotel!","Warning",JOptionPane.WARNING_MESSAGE); 
-                    }
-                }else{
-                    JOptionPane.showMessageDialog(null, "Selecione um Quarto!","Warning",JOptionPane.WARNING_MESSAGE); 
+    private void SearchCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchCustomerButtonActionPerformed
+        System.out.printf("%s\n", CPFSearchTextField.getText());
+        var cpf = CPFSearchTextField.getText();
+        var customer = customerService.getCustomerByCPF(cpf);
+
+        if (customer.isPresent()) {
+            var customerInstance = customer.get();
+            CEPTextField.setText(customerInstance.getCep());
+            CPFTextField.setText(customerInstance.getCpf());
+            CustomerNameTextField.setText(customerInstance.getName());
+            EmailTextField.setText(customerInstance.getEmail());
+            HouseNumberTextField.setText(customerInstance.getNumber());
+            PhoneTextField.setText(customerInstance.getPhone());
+
+            var birthDate = customerInstance.getBirthDate();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String date = sdf.format(birthDate);
+            CustomerBirthDateTextField.setText(date);
+
+            SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
+
+            try {
+                Date dataUsuario = sdf1.parse(String.format("%s/07/2022", DayTextField.getText()));
+                System.out.println(dataUsuario);
+                var reservation = reservationServicos.getReservationByCustomerAndDate(customerInstance, dataUsuario);
+
+                if (!reservation.isEmpty()) {
+                    var reservationInstance = reservation.get(0);
+                    var hotelId = reservationInstance.getRoom().getHotel().getId();
+
+                    RoomTextField.setText(Long.toString(reservationInstance.getRoom().getId()));
+                    FloorTextField.setText(Long.toString(reservationInstance.getRoom().getFloor()));
+                    CapacityTextField.setText(Integer.toString(reservationInstance.getRoom().getCapacity()));
+                    HotelTextField.setText(Long.toString(hotelId));
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Não há reservas nessa data para o CPF consultado");
                 }
-            }else{
-                JOptionPane.showMessageDialog(null, "Selecione a Quantidade de Dias de Hospedagem!","Warning",JOptionPane.WARNING_MESSAGE); 
+            } catch (ParseException e) {
+                JOptionPane.showMessageDialog(null, "Erro de Parse");
             }
-        }else{
-            JOptionPane.showMessageDialog(null, "Selecione a Data Inicial da Reserva!","Warning",JOptionPane.WARNING_MESSAGE); 
-        }
-    }//GEN-LAST:event_jButton1MouseClicked
 
-    private void ReservationDayFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ReservationDayFocusLost
-        accomodationDays.removeAllItems();
-        int i;
-        var diaInicio = Integer.parseInt(ReservationDay.getSelectedItem().toString());
-        for(i=diaInicio; i<=31; i++){
-            var itemCB = 31 - (i-1);
-            accomodationDays.addItem(Integer.toString(itemCB));
+        } else {
+            JOptionPane.showMessageDialog(null, "Cliente não cadastrado no sistema");
         }
-    }//GEN-LAST:event_ReservationDayFocusLost
+    }//GEN-LAST:event_SearchCustomerButtonActionPerformed
+
+    private void CPFSearchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CPFSearchTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CPFSearchTextFieldActionPerformed
 
     private void clearAccomodationData(){
         accomodationToCheckout = null;
