@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import unesp.lcp.LCP2022.DTOs.ReservationDTO;
 import unesp.lcp.LCP2022.models.Accomodation;
 import unesp.lcp.LCP2022.models.AccomodationKey;
 import unesp.lcp.LCP2022.models.Customer;

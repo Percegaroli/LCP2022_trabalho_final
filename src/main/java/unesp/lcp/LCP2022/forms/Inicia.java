@@ -60,10 +60,8 @@ public class Inicia extends javax.swing.JFrame {
     @Autowired
     private AccomodationService accomodationService;
     
-    @Autowired
     private AccomodationToCheckout accomodationToCheckout;
     
-    @Autowired
     private ReservationDTO reservationDTO;
 
     /**
@@ -1131,52 +1129,56 @@ public class Inicia extends javax.swing.JFrame {
                     if(!(tbHoteis.getSelectedRow() == -1)){
                         if(tbQuartos.getValueAt(tbQuartos.getSelectedRow(), 4) == "Sim"){
                             var customer = customerService.getCustomerByName(cbCadastros.getSelectedItem().toString());
-                            var customAcomodation = accomodationService.findAccomodationByCustomerCPF(customer.getCpf());
-                            var customReservations = reservationServicos.getReservationByCustomer(customer);
-                            if(!customReservations.isEmpty()){
-                                if(!customAcomodation.isEmpty()){
-                                    for(var reserv: customReservations){
-                                        var diasHospedados = accomodationService.getDaysAccomodation(customAcomodation, reserv.getDaysReserved());
-                                        if(diasHospedados.contains(Integer.parseInt(ReservationDay.getSelectedItem().toString()))){
-                                            hopedado = true;
+                            if (customer.isPresent()){
+                                var customAcomodation = accomodationService.findAccomodationByCustomerCPF(customer.get().getCpf());
+                                var customReservations = reservationServicos.getReservationByCustomer(customer.get());
+                                if(!customReservations.isEmpty()){
+                                    if(!customAcomodation.isEmpty()){
+                                        for(var reserv: customReservations){
+                                            var diasHospedados = accomodationService.getDaysAccomodation(customAcomodation, reserv.getDaysReserved());
+                                            if(diasHospedados.contains(Integer.parseInt(ReservationDay.getSelectedItem().toString()))){
+                                                hopedado = true;
+                                            }
                                         }
+                                    }else{
+                                       for(var reserv: customReservations){
+                                            var diasReservados = reservationServicos.getDaysReservation(reserv);
+                                            if(diasReservados.contains(Integer.parseInt(ReservationDay.getSelectedItem().toString()))){
+                                                Reservado = true;
+                                            }
+                                        } 
+                                    }    
+                                    if(hopedado){
+                                        fazReserva = false;
+                                        JOptionPane.showMessageDialog(null, "Você Ainda Estará no Periodo da Hospedagem atual na Data Escolhida!","Warning",JOptionPane.WARNING_MESSAGE);
                                     }
-                                }else{
-                                   for(var reserv: customReservations){
-                                        var diasReservados = reservationServicos.getDaysReservation(reserv);
-                                        if(diasReservados.contains(Integer.parseInt(ReservationDay.getSelectedItem().toString()))){
-                                            Reservado = true;
+                                    if(Reservado){
+                                        fazReserva = false;
+                                        JOptionPane.showMessageDialog(null, "Você Já tem uma reserva para a Data Escolhida!","Warning",JOptionPane.WARNING_MESSAGE);
+                                    }
+                                    if(fazReserva){
+                                        try {
+                                            reservationDTO.setDays((int) accomodationDays.getSelectedItem());
+                                            var selectedRoomId = (long) tbQuartos.getValueAt(tbQuartos.getSelectedRow(), 0);
+                                            reservationDTO.setRoomId(selectedRoomId);
+                                            String dataInicialText = ReservationDay.getSelectedItem().toString()+"/07/2022";
+                                            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                                            Date dataInicial = formato.parse(dataInicialText); 
+                                            reservationDTO.setStartDate(dataInicial);
+                                            var cliente = customerService.getCustomerByName((String) cbCadastros.getSelectedItem());
+                                            if (cliente.isPresent()){
+                                                reservationDTO.setCustomerCPF(cliente.get().getCpf());
+                                                var result = reservationServicos.reservateRoom(reservationDTO);
+                                            }
                                         }
-                                    } 
-                                }    
-                                if(hopedado){
-                                    fazReserva = false;
-                                    JOptionPane.showMessageDialog(null, "Você Ainda Estará no Periodo da Hospedagem atual na Data Escolhida!","Warning",JOptionPane.WARNING_MESSAGE);
-                                }
-                                if(Reservado){
-                                    fazReserva = false;
-                                    JOptionPane.showMessageDialog(null, "Você Já tem uma reserva para a Data Escolhida!","Warning",JOptionPane.WARNING_MESSAGE);
-                                }
-                                if(fazReserva){
-                                    try {
-                                        reservationDTO.setDays((int) accomodationDays.getSelectedItem());
-                                        var selectedRoomId = (long) tbQuartos.getValueAt(tbQuartos.getSelectedRow(), 0);
-                                        reservationDTO.setRoomId(selectedRoomId);
-                                        String dataInicialText = ReservationDay.getSelectedItem().toString()+"/07/2022";
-                                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                                        Date dataInicial = formato.parse(dataInicialText); 
-                                        reservationDTO.setStartDate(dataInicial);
-                                        var cliente = customerService.getCustomerByName((String) cbCadastros.getSelectedItem());
-                                        reservationDTO.setCustomerCPF(cliente.getCpf());
-                                        var result = reservationServicos.reservateRoom(reservationDTO);
-                                    }
-                                    catch (Exception e){
-                                        JOptionPane.showMessageDialog(null, "Não foi possivel fazer o check-in");
-                                        return;
-                                    }
-                                    JOptionPane.showMessageDialog(null, "Reserva feita com sucesso!");
-                                }     
-                            }                     
+                                        catch (Exception e){
+                                            JOptionPane.showMessageDialog(null, "Não foi possivel fazer o check-in");
+                                            return;
+                                        }
+                                        JOptionPane.showMessageDialog(null, "Reserva feita com sucesso!");
+                                    }     
+                                }      
+                            }         
                         }else{
                            JOptionPane.showMessageDialog(null, "O Quarto Não está Disponível na Data Escolhida!","Warning",JOptionPane.WARNING_MESSAGE); 
                         }

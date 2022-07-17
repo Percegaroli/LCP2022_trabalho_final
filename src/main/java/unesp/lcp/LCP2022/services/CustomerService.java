@@ -15,5 +15,5 @@ import unesp.lcp.LCP2022.models.Customer;
 public interface CustomerService {
     public Optional<Customer> getCustomerByCPF(String cpf);
     public List<Customer> getAll();
-    public Customer getCustomerByName(String name);
+    public Optional<Customer> getCustomerByName(String name);
 }

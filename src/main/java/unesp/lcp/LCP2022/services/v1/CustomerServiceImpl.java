@@ -27,12 +27,12 @@ public class CustomerServiceImpl implements CustomerService{
     }
     
     @Override
-    public Customer getCustomerByName(String name){
+    public Optional<Customer> getCustomerByName(String name){
         return customerRepository.findByName(name);
     }
     
     @Override
     public List<Customer> getAll(){
-        return customerRepository.findAllCustomers();
+        return customerRepository.findAll();
     }
 }
